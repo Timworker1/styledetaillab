@@ -86,7 +86,7 @@ export default function Calculator() {
 
             {/* Step 1 — Variant */}
             <Card step="01" title="Choose your service">
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {SERVICE_VARIANTS.map((v) => (
                   <button
                     key={v.id}
