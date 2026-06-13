@@ -43,7 +43,7 @@ export default function Hero() {
           loop
           playsInline
           poster="/hero/hero-poster.jpg"
-          src="/hero/hero-video.mp4"
+          src={`${import.meta.env.BASE_URL}hero/hero-video.mp4`}
         />
 
         {/* Mobile fallback */}

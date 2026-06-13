@@ -10,9 +10,10 @@ interface Pair {
 
 // TODO: replace with real before/after pairs
 // Place images in public/before-after/ folder: 01-before.jpg, 01-after.jpg, etc.
+const base = import.meta.env.BASE_URL
 const PAIRS: Pair[] = [
-  { before: '/before-after/01-before.jpg', after: '/before-after/01-after.jpg', label: 'Interior Detail' },
-  { before: '/before-after/02-before.jpg', after: '/before-after/02-after.jpg', label: 'Exterior Detail' },
+  { before: `${base}before-after/01-before.jpg`, after: `${base}before-after/01-after.jpg`, label: 'Interior Detail' },
+  { before: `${base}before-after/02-before.jpg`, after: `${base}before-after/02-after.jpg`, label: 'Exterior Detail' },
 ]
 
 export default function BeforeAfter() {

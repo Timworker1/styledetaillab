@@ -2,14 +2,16 @@ import { useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { X, ArrowUpRight, Play } from 'lucide-react'
 
+const base = import.meta.env.BASE_URL
+
 const VIDEOS = [
-  { src: '/gallery/video do.mp4',   label: 'BEFORE', sub: 'Paint correction start' },
-  { src: '/gallery/video posle.mp4', label: 'AFTER',  sub: 'Showroom-grade finish'  },
+  { src: `${base}gallery/video do.mp4`,   label: 'BEFORE', sub: 'Paint correction start' },
+  { src: `${base}gallery/video posle.mp4`, label: 'AFTER',  sub: 'Showroom-grade finish'  },
 ]
 
 const WORKS = [
   {
-    src:     '/gallery/bmw-grey.jpg',
+    src:     `${base}gallery/bmw-grey.jpg`,
     car:     'BMW 3 Series',
     service: 'Exterior Detail',
     tag:     'Most Popular',
@@ -18,7 +20,7 @@ const WORKS = [
     featured: true,
   },
   {
-    src:     '/gallery/range-rover.jpg',
+    src:     `${base}gallery/range-rover.jpg`,
     car:     'Range Rover',
     service: 'Complete Detail',
     tag:     'Luxury SUV',
@@ -26,7 +28,7 @@ const WORKS = [
     featured: false,
   },
   {
-    src:     '/gallery/audi.jpg',
+    src:     `${base}gallery/audi.jpg`,
     car:     'Audi A Series',
     service: 'Exterior + Engine Bay',
     tag:     'Premium',
@@ -34,7 +36,7 @@ const WORKS = [
     featured: false,
   },
   {
-    src:     '/gallery/bmw-red.jpg',
+    src:     `${base}gallery/bmw-red.jpg`,
     car:     'BMW M Sport',
     service: 'Full Foam Wash + Detail',
     tag:     'Sport',
