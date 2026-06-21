@@ -21,7 +21,7 @@ const TRUST_PILLS = [
   { icon: ShieldCheck, label: 'Fully Insured' },
   { icon: Droplets,    label: 'Own Water & Power' },
   { icon: CloudRain,   label: "Rain Won't Stop Us" },
-  { icon: BadgeCheck,  label: 'All Prices Incl. VAT' },
+  { icon: BadgeCheck,  label: 'Transparent Pricing' },
 ]
 
 function useCounter(target: number, decimals = 0, active: boolean) {

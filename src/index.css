@@ -7,8 +7,9 @@
     color-scheme: dark;
   }
 
-  html {
+  html, body {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   /* Custom cursor — desktop only */
@@ -55,6 +56,21 @@
     background-clip: text;
   }
 
+  .chrome-text {
+    background: linear-gradient(
+      135deg,
+      #C8C8C8  0%,
+      #FFFFFF  20%,
+      #E0E0E0  40%,
+      #909090  60%,
+      #F0F0F0  80%,
+      #B8B8B8 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   /* ── Film grain overlay ─────────────────────────────────────────────── */
   .bg-grain::after {
     content: '';
@@ -66,6 +82,15 @@
     background-size: 160px 160px;
     background-repeat: repeat;
     z-index: 1;
+  }
+
+  /* ── Neon glow on accent buttons ───────────────────────────────────── */
+  .btn-neon {
+    box-shadow: 0 0 12px rgba(15,138,84,0.35), 0 0 30px rgba(15,138,84,0.12);
+    transition: box-shadow 0.3s ease, background-color 0.2s ease, transform 0.2s ease;
+  }
+  .btn-neon:hover {
+    box-shadow: 0 0 18px rgba(15,138,84,0.55), 0 0 50px rgba(15,138,84,0.2);
   }
 
   /* ── Dot grid ────────────────────────────────────────────────────────── */

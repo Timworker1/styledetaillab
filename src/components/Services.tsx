@@ -1,6 +1,7 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
-import { Check, ArrowRight } from 'lucide-react'
+import { Check, ArrowRight, Clock } from 'lucide-react'
 import { SERVICE_VARIANTS, ADD_ONS, VEHICLE_SIZES } from '../config/pricing'
 
 const PACKAGE_HIGHLIGHTS: Record<string, { icon: string; tagline: string }> = {
@@ -21,6 +22,9 @@ function useFadeUp(ref: React.RefObject<Element | null>, delay = 0) {
 export default function Services() {
   const headRef = useRef<HTMLDivElement>(null)
   const headAnim = useFadeUp(headRef)
+  const [selectedSize, setSelectedSize] = useState<string>('M')
+
+  const currentSize = VEHICLE_SIZES.find(s => s.id === selectedSize)!
 
   return (
     <section id="services" className="relative py-24 px-4 sm:px-6 lg:px-8 bg-bg-base overflow-hidden">
@@ -29,7 +33,7 @@ export default function Services() {
       <div className="relative z-10 max-w-6xl mx-auto">
 
         {/* Section header */}
-        <motion.div ref={headRef} {...headAnim} className="text-center mb-16">
+        <motion.div ref={headRef} {...headAnim} className="text-center mb-10">
           <p className="font-body text-sm font-semibold uppercase tracking-widest text-accent mb-3">
             What We Offer
           </p>
@@ -41,10 +45,38 @@ export default function Services() {
           </p>
         </motion.div>
 
+        {/* Vehicle size selector */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex flex-col items-center gap-3 mb-10"
+        >
+          <p className="font-body text-xs uppercase tracking-widest text-text-muted">Select your vehicle size</p>
+          <div className="flex items-center gap-2 p-1 rounded-xl border border-border bg-bg-panel">
+            {VEHICLE_SIZES.map((size) => (
+              <button
+                key={size.id}
+                onClick={() => setSelectedSize(size.id)}
+                className={`relative px-5 py-2 rounded-lg font-body text-sm font-semibold transition-all duration-200
+                  ${selectedSize === size.id
+                    ? 'bg-accent text-white shadow-sm'
+                    : 'text-text-muted hover:text-text-primary'
+                  }`}
+              >
+                {size.label}
+              </button>
+            ))}
+          </div>
+          <p className="font-body text-xs text-text-muted">
+            {currentSize.description} — <span className="text-text-secondary">{currentSize.examples.slice(0, 3).join(', ')}</span>
+          </p>
+        </motion.div>
+
         {/* Package cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
           {SERVICE_VARIANTS.map((variant, i) => (
-            <PackageCard key={variant.id} variant={variant} index={i} />
+            <PackageCard key={variant.id} variant={variant} index={i} selectedSize={selectedSize} />
           ))}
         </div>
 
@@ -65,12 +97,14 @@ export default function Services() {
   )
 }
 
-function PackageCard({ variant, index }: { variant: typeof SERVICE_VARIANTS[0]; index: number }) {
+function PackageCard({ variant, index, selectedSize }: { variant: typeof SERVICE_VARIANTS[0]; index: number; selectedSize: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
   const isComplete = variant.id === 'complete'
 
-  const priceFrom = Math.min(...VEHICLE_SIZES.map((s) => s.prices[variant.id]))
+  const sizeData = VEHICLE_SIZES.find(s => s.id === selectedSize)!
+  const price = sizeData.prices[variant.id]
+  const duration = sizeData.durationHours[variant.id]
 
   return (
     <motion.div
@@ -78,10 +112,10 @@ function PackageCard({ variant, index }: { variant: typeof SERVICE_VARIANTS[0]; 
       initial={{ opacity: 0, y: 36 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.65, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className={`relative group flex flex-col rounded-2xl border p-7 transition-all duration-300 cursor-default
+      className={`relative group flex flex-col rounded-2xl border p-5 transition-all duration-300 cursor-default
         ${isComplete
           ? 'border-accent/50 bg-accent/5 hover:border-accent hover:bg-accent/10'
-          : 'border-border bg-bg-panel hover:border-text-muted'
+          : 'border-border bg-bg-panel hover:border-text-muted/40'
         }`}
       style={{ willChange: 'transform' }}
       onMouseMove={(e) => {
@@ -102,7 +136,7 @@ function PackageCard({ variant, index }: { variant: typeof SERVICE_VARIANTS[0]; 
       )}
 
       {/* Icon + name */}
-      <div className="flex items-center gap-3 mb-4">
+      <div className="flex items-center gap-3 mb-1">
         <span className={`text-xl ${isComplete ? 'text-accent' : 'text-text-muted'}`}>
           {PACKAGE_HIGHLIGHTS[variant.id].icon}
         </span>
@@ -111,24 +145,24 @@ function PackageCard({ variant, index }: { variant: typeof SERVICE_VARIANTS[0]; 
         </h3>
       </div>
 
-      <p className="font-body text-sm text-text-muted mb-6 leading-relaxed">
+      <p className="font-body text-sm text-text-muted mb-4 leading-relaxed">
         {PACKAGE_HIGHLIGHTS[variant.id].tagline}
       </p>
 
       {/* Included list */}
-      <ul className="space-y-2.5 flex-1 mb-7">
+      <ul className="space-y-2.5 flex-1 mb-5">
         {variant.included.map((item) => {
           const [title, desc] = item.split(' — ')
           return (
             <li key={item} className="flex items-start gap-2.5">
               <Check
-                size={13}
+                size={12}
                 className={`mt-0.5 flex-shrink-0 ${isComplete ? 'text-accent' : 'text-text-muted'}`}
                 strokeWidth={2.5}
               />
-              <span className="font-body text-xs text-text-muted leading-relaxed">
-                <span className="text-text-secondary font-medium">{title}</span>
-                {desc && ` — ${desc}`}
+              <span className="font-body text-xs leading-snug">
+                <span className="text-text-secondary font-semibold">{title}</span>
+                {desc && <span className="text-text-muted"> — {desc}</span>}
               </span>
             </li>
           )
@@ -139,33 +173,62 @@ function PackageCard({ variant, index }: { variant: typeof SERVICE_VARIANTS[0]; 
       <div className="border-t border-border pt-5 mt-auto">
         <div className="flex items-end justify-between mb-4">
           <div>
-            <p className="font-body text-xs text-text-muted mb-0.5">Starting from</p>
-            <p className="font-heading font-black text-3xl text-text-primary">
-              €{priceFrom}
-            </p>
+            <p className="font-body text-xs text-text-muted mb-0.5">{sizeData.label} vehicle</p>
+            <motion.p
+              key={price}
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
+              className="font-heading font-black text-3xl text-text-primary"
+            >
+              €{price}
+            </motion.p>
           </div>
-          <p className="font-body text-xs text-text-muted text-right">
-            Prices vary<br />by vehicle size
-          </p>
+          <div className="flex items-center gap-1.5 text-text-muted">
+            <Clock size={12} />
+            <p className="font-body text-xs">{duration}–{duration + 1}h</p>
+          </div>
         </div>
-        <a
-          href="#calculator"
-          className={`flex items-center justify-center gap-2 w-full py-3 rounded-lg font-body font-semibold text-sm transition-colors duration-200
-            ${isComplete
-              ? 'bg-accent hover:bg-accent-dark text-white'
-              : 'border border-border hover:border-accent text-text-muted hover:text-text-primary'
-            }`}
-        >
-          Configure & Price
-          <ArrowRight size={14} />
-        </a>
+        <div className="flex flex-col gap-2">
+          <a
+            href="#calculator"
+            className={`flex items-center justify-center gap-2 w-full py-3 rounded-lg font-body font-semibold text-sm transition-colors duration-200
+              ${isComplete
+                ? 'bg-accent hover:bg-accent-dark text-white'
+                : 'border border-border hover:border-accent text-text-muted hover:text-text-primary'
+              }`}
+          >
+            Configure & Price
+            <ArrowRight size={14} />
+          </a>
+          <Link
+            to="/services"
+            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg font-body text-sm text-text-muted hover:text-accent transition-colors duration-200"
+          >
+            View Details
+            <ArrowRight size={13} />
+          </Link>
+        </div>
       </div>
 
-      {/* Wet-gloss hover shimmer */}
+      {/* Hover shimmer */}
       <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{ background: 'radial-gradient(circle at 50% 0%, rgba(31,163,122,0.08) 0%, transparent 60%)' }}
       />
     </motion.div>
+  )
+}
+
+function AddonCard({ addon, className = '' }: { addon: typeof ADD_ONS[0]; className?: string }) {
+  return (
+    <div className={`flex flex-col items-start p-4 rounded-xl border border-border bg-bg-panel hover:border-accent/50 transition-colors duration-200 group ${className}`}>
+      <p className="font-body text-sm font-semibold text-text-primary mb-1 leading-snug group-hover:text-accent transition-colors duration-200">
+        {addon.label}
+      </p>
+      <p className="font-body text-xs text-text-muted mt-auto pt-3 font-semibold">
+        from €{addon.price}
+      </p>
+    </div>
   )
 }
 
@@ -179,21 +242,20 @@ function AddOnsGrid() {
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10"
+      className="mb-10"
     >
-      {ADD_ONS.map((addon) => (
-        <div
-          key={addon.id}
-          className="flex flex-col items-start p-4 rounded-xl border border-border bg-bg-panel hover:border-accent/50 transition-colors duration-200 group"
-        >
-          <p className="font-body text-sm font-semibold text-text-primary mb-1 leading-snug group-hover:text-accent transition-colors duration-200">
-            {addon.label}
-          </p>
-          <p className="font-body text-xs text-text-muted mt-auto pt-3 font-semibold">
-            from €{addon.price}
-          </p>
-        </div>
-      ))}
+      {/* First row: 4 items */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
+        {ADD_ONS.slice(0, 4).map((addon) => (
+          <AddonCard key={addon.id} addon={addon} />
+        ))}
+      </div>
+      {/* Second row: 3 items centered */}
+      <div className="grid grid-cols-2 sm:flex sm:justify-center gap-3">
+        {ADD_ONS.slice(4).map((addon) => (
+          <AddonCard key={addon.id} addon={addon} className="sm:w-[calc(25%-9px)]" />
+        ))}
+      </div>
     </motion.div>
   )
 }

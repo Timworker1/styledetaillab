@@ -163,7 +163,7 @@ function EircodeChecker() {
           />
           <button
             onClick={check}
-            className="px-6 py-3.5 rounded-xl bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm transition-colors flex items-center gap-2 whitespace-nowrap"
+            className="btn-neon px-6 py-3.5 rounded-xl bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm flex items-center gap-2 whitespace-nowrap"
           >
             Check
           </button>

@@ -26,7 +26,7 @@ const REASONS = [
   {
     icon: CalendarCheck,
     title: 'Flexible Scheduling',
-    body: 'Early mornings, evenings, weekends — we work around your calendar, not the other way around.',
+    body: 'Available weekday evenings from 5 pm, and all day Saturday & Sunday 9 am–9 pm — we work around your schedule.',
   },
   {
     icon: CloudRain,

@@ -37,20 +37,13 @@ export default function Hero() {
         className="absolute inset-0 z-0 scale-110"
       >
         <video
-          className="hidden md:block absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
           autoPlay
           muted
           loop
           playsInline
-          poster="/hero/hero-poster.jpg"
+          poster={`${import.meta.env.BASE_URL}hero/hero-poster.jpg`}
           src={`${import.meta.env.BASE_URL}hero/hero-video.mp4`}
-        />
-
-        {/* Mobile fallback */}
-        <div
-          className="md:hidden absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: 'url(/hero/hero-poster.jpg)' }}
-          aria-hidden="true"
         />
 
         {/* Dark gradient overlay */}
@@ -59,7 +52,7 @@ export default function Hero() {
         {/* Emerald studio glow */}
         <div
           className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full opacity-10 pointer-events-none"
-          style={{ background: 'radial-gradient(circle, #1FA37A 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(circle, #00572F 0%, transparent 70%)' }}
         />
       </motion.div>
 
@@ -82,9 +75,9 @@ export default function Hero() {
         {/* Headline — per-line clip-path reveal */}
         <h1 className="font-heading font-black uppercase tracking-heading text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-text-primary leading-none mb-6">
           {[
-            { text: 'Showroom',      delay: 0.2,  cls: '' },
+            { text: 'Showroom',      delay: 0.2,  cls: 'chrome-text' },
             { text: 'Results.',      delay: 0.38, cls: 'text-accent-gradient' },
-            { text: 'At Your Door.', delay: 0.56, cls: '' },
+            { text: 'At Your Door.', delay: 0.56, cls: 'chrome-text' },
           ].map(({ text, delay, cls }) => (
             <div key={text} className="overflow-hidden">
               <motion.div
@@ -121,7 +114,7 @@ export default function Hero() {
         >
           <a
             href="#calculator"
-            className="w-full sm:w-auto px-8 py-4 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-base transition-colors duration-200 shadow-lg shadow-accent/20"
+            className="btn-neon w-full sm:w-auto px-8 py-4 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-base duration-200"
           >
             Get My Instant Estimate
           </a>

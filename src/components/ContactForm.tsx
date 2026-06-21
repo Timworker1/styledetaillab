@@ -189,7 +189,7 @@ export default function ContactForm() {
                 <button
                   type="submit"
                   disabled={!form.gdpr || loading}
-                  className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-lg bg-accent hover:bg-accent-dark disabled:opacity-40 disabled:cursor-not-allowed text-white font-body font-semibold text-sm transition-colors"
+                  className="btn-neon flex-1 flex items-center justify-center gap-2 py-3.5 rounded-lg bg-accent hover:bg-accent-dark disabled:opacity-40 disabled:cursor-not-allowed text-white font-body font-semibold text-sm"
                 >
                   {loading ? (
                     <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

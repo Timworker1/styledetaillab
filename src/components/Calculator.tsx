@@ -292,13 +292,13 @@ export default function Calculator() {
                 </span>
               </div>
               <p className="font-body text-xs text-text-muted mb-6">
-                Incl. 23% VAT · Final price confirmed after inspection
+                Final price confirmed after inspection
               </p>
 
               {/* CTAs */}
               <a
                 href="#contact"
-                className="block w-full py-3.5 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm text-center transition-colors mb-3"
+                className="btn-neon block w-full py-3.5 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm text-center mb-3"
               >
                 Get My Quote
                 <ChevronRight size={14} className="inline ml-1" />

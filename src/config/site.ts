@@ -7,10 +7,10 @@ export const SITE_CONFIG = {
   tagline: 'Premium Mobile Detailing. We Come to You.',
 
   // ─── Contact ────────────────────────────────────────────────────────────
-  phone: '+353 TODO',                         // e.g. "+353 87 123 4567"
-  phoneDisplay: 'TODO Phone',                 // shown in UI, e.g. "087 123 4567"
-  whatsapp: '+353TODO',                       // no spaces/dashes — used in wa.me link
-  email: 'TODO@example.com',
+  phone: '+353874752507',
+  phoneDisplay: '+353 87 475 2507',
+  whatsapp: '+353874752507',
+  email: 'styledetaillab@gmail.com',
 
   // ─── Social ─────────────────────────────────────────────────────────────
   social: {

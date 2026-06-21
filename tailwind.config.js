@@ -12,14 +12,14 @@ export default {
           DEFAULT: '#232327',
         },
         text: {
-          primary: '#FFFFFF',
-          secondary: '#F2F2F2',
-          muted: '#9A9AA0',
+          primary: '#C8C8C8',
+          secondary: '#A0A0A0',
+          muted: '#686870',
         },
         accent: {
-          DEFAULT: '#1FA37A',
-          light: '#54C39A',
-          dark: '#16775A',
+          DEFAULT: '#0F8A54',
+          light: '#1AAA6A',
+          dark: '#0A6640',
         },
       },
       fontFamily: {

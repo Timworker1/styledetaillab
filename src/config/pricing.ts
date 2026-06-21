@@ -1,4 +1,4 @@
-// All prices are gross (incl. 23% VAT). Edit here — nowhere else.
+// All prices are net (excl. VAT). Edit here — nowhere else.
 
 export type ServiceVariant = 'exterior' | 'interior' | 'complete'
 export type VehicleSize = 'S' | 'M' | 'L' | 'XL'
@@ -42,12 +42,14 @@ export const SERVICE_VARIANTS: ServiceVariantOption[] = [
     label: 'Exterior',
     tagline: 'Full exterior decontamination & protection',
     included: [
-      'Paint Decontamination — removes bonded contaminants a normal wash leaves behind',
-      'Bodywork & Shuts — every panel, sill and door shut cleaned by hand',
-      'Wheels & Tyres — wheels deep-cleaned, tyre dressing applied',
-      'Glass, Plastics & Seals — exterior glass, trim and rubber seals treated',
-      'Details — exhaust tips, fuel cap, mirror housings, sensors, cameras',
-      'Paint Protection — sealant for a hydrophobic finish and easier future washes',
+      'Snow Foam Prewash — loosens soiling on panels, wheels & arches',
+      'Contact Wash — two-bucket hand wash, every panel by hand',
+      'Blow Dry & Hand Finish — microfibre dry, zero water spots',
+      'Paint Decontamination — iron fallout & tar removed',
+      'Wheels & Wheel Arches — decontaminated, tyre dressing applied',
+      'Glass & Seals — streak-free polish, rubber seals treated',
+      'Trim & Details — plastics, tips, cameras & sensors dressed',
+      'Paint Protection — protective finish for shine & longevity',
     ],
   },
   {
@@ -55,12 +57,14 @@ export const SERVICE_VARIANTS: ServiceVariantOption[] = [
     label: 'Interior',
     tagline: 'Deep interior clean & conditioning',
     included: [
-      'Full Vacuum — seats, carpets, boot and all door pockets',
-      'Steam Clean — dashboard, vents, door cards, cup holders',
-      'Leather / Fabric Treatment — clean and condition all surfaces',
-      'Interior Glass — streak-free clean on all interior glass',
-      'Plastics & Trim — dressed and UV-protected',
-      'Odour Neutraliser — light fresh finish as standard',
+      'Full Vacuum — seats, carpets, boot & door pockets',
+      'Steam Clean — dashboard, vents, door cards & pedals',
+      'Leather / Fabric Care — cleaned, conditioned & protected',
+      'Seat Belts — fully extended, cleaned & dried',
+      'Headlining (Ceiling) — cleaned & refreshed throughout',
+      'Interior Glass — streak-free polish inside',
+      'Plastics & Trim — dressed & UV-protected',
+      'Ozone Treatment — eliminates odours at the source',
     ],
   },
   {
@@ -68,14 +72,19 @@ export const SERVICE_VARIANTS: ServiceVariantOption[] = [
     label: 'Complete',
     tagline: 'Full exterior & interior — the works',
     included: [
-      'Paint Decontamination — removes bonded contaminants a normal wash leaves behind',
-      'Bodywork & Shuts — every panel, sill and door shut cleaned by hand',
-      'Wheels & Tyres — wheels deep-cleaned, tyre dressing applied',
-      'Full Interior Vacuum & Steam Clean',
-      'Leather / Fabric Treatment — clean and condition all surfaces',
-      'Glass, Plastics & Seals — inside and out',
-      'Details — exhaust tips, fuel cap, mirror housings, sensors, cameras',
-      'Paint Protection — sealant for a hydrophobic finish and easier future washes',
+      'Snow Foam Prewash — loosens soiling on panels, wheels & arches',
+      'Contact Wash — two-bucket hand wash, every panel by hand',
+      'Blow Dry & Hand Finish — microfibre dry, zero water spots',
+      'Paint Decontamination — iron fallout & tar removed',
+      'Wheels & Wheel Arches — decontaminated, tyre dressing applied',
+      'Full Vacuum & Steam Clean — every surface, vent & crevice',
+      'Leather / Fabric Care — cleaned, conditioned & protected',
+      'Seat Belts — fully extended, cleaned & dried',
+      'Headlining (Ceiling) — cleaned & refreshed throughout',
+      'Glass — streak-free inside and out',
+      'Trim & Details — plastics, tips, cameras & sensors dressed',
+      'Ozone Treatment — eliminates odours at the source',
+      'Paint Protection — protective finish for shine & longevity',
     ],
   },
 ]
@@ -161,7 +170,7 @@ export const ADD_ONS: AddOn[] = [
     id: 'engine-bay',
     label: 'Engine Bay Detailing',
     tooltip: 'Careful degreasing and dressing of the engine bay — impressive at inspection and keeps dirt from baking on.',
-    price: 60,
+    price: 50,
   },
   {
     id: 'trim-restoration',
@@ -180,11 +189,5 @@ export const ADD_ONS: AddOn[] = [
     label: 'Pet Hair Removal',
     tooltip: 'Specialist removal of deeply embedded pet hair from seats, carpets and boot area.',
     price: 40,
-  },
-  {
-    id: 'odour-removal',
-    label: 'Odour Removal / Ozone Treatment',
-    tooltip: 'Eliminates persistent odours (smoke, pets, damp) at the source using professional ozone treatment.',
-    price: 50,
   },
 ]

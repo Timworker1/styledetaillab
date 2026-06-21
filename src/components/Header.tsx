@@ -3,6 +3,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Phone, Menu, X, MessageCircle } from 'lucide-react'
 import { SITE_CONFIG } from '../config/site'
 
+const base = import.meta.env.BASE_URL
+
 const NAV_LINKS = [
   { label: 'Services', href: '#services' },
   { label: 'Calculator', href: '#calculator' },
@@ -33,16 +35,15 @@ export default function Header() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="flex items-center justify-between h-20 lg:h-24">
 
             {/* Logo */}
-            <a href="#" className="flex-shrink-0 flex flex-col items-center leading-none">
-              <span className="font-heading font-black uppercase text-xl lg:text-2xl tracking-heading text-text-primary">
-                Emer<span className="text-accent">a</span>ld
-              </span>
-              <span className="font-body text-[10px] lg:text-xs uppercase tracking-widest text-accent font-semibold mt-0.5">
-                Mobile Detailing
-              </span>
+            <a href="#" className="flex-shrink-0">
+              <img
+                src={`${base}gallery/logotip.png`}
+                alt="Emerald Mobile Detailing"
+                className="h-16 lg:h-20 w-auto object-contain"
+              />
             </a>
 
             {/* Desktop nav */}
@@ -69,7 +70,7 @@ export default function Header() {
               </a>
               <a
                 href="#calculator"
-                className="px-5 py-2.5 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm transition-colors duration-200"
+                className="btn-neon px-5 py-2.5 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm"
               >
                 Get a Quote
               </a>

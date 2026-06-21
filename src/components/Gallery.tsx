@@ -1,8 +1,14 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useCallback, useEffect } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
-import { X, ArrowUpRight, Play } from 'lucide-react'
+import { X, ArrowUpRight, Play, GripVertical, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const base = import.meta.env.BASE_URL
+
+interface Pair { before: string; after: string; label: string }
+const PAIRS: Pair[] = [
+  { before: `${base}before-after/01-before.jpg`, after: `${base}before-after/01-after.jpg`, label: 'Interior Detail' },
+  { before: `${base}before-after/02-before.jpg`, after: `${base}before-after/02-after.jpg`, label: 'Exterior Detail' },
+]
 
 const VIDEOS = [
   { src: `${base}gallery/video do.mp4`,   label: 'BEFORE', sub: 'Paint correction start' },
@@ -45,6 +51,165 @@ const WORKS = [
   },
 ]
 
+function BeforeAfterSlider() {
+  const [[pairIndex, direction], setPair] = useState([0, 0])
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+
+  const navigate = (dir: number) => {
+    setPair(([i]) => [(i + dir + PAIRS.length) % PAIRS.length, dir])
+  }
+
+  const variants = {
+    enter: (dir: number) => ({
+      rotateY: dir > 0 ? 90 : -90,
+      scale: 0.3,
+      opacity: 0,
+      z: -600,
+    }),
+    center: {
+      rotateY: 0,
+      scale: 1,
+      opacity: 1,
+      z: 0,
+    },
+    exit: (dir: number) => ({
+      rotateY: dir > 0 ? -90 : 90,
+      scale: 0.3,
+      opacity: 0,
+      z: -600,
+    }),
+  }
+
+  const springTransition = {
+    type: 'spring' as const,
+    stiffness: 220,
+    damping: 26,
+    mass: 0.9,
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+      className="relative max-w-3xl mx-auto"
+    >
+      {/* Left arrow */}
+      <button
+        onClick={() => navigate(-1)}
+        className="absolute left-2 sm:left-0 top-1/2 -translate-y-1/2 sm:-translate-x-[calc(100%+16px)] z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-border bg-bg-base/90 sm:bg-bg-base hover:border-accent hover:bg-accent/10 flex items-center justify-center text-text-muted hover:text-accent transition-all duration-200"
+        aria-label="Previous"
+      >
+        <ChevronLeft size={22} />
+      </button>
+
+      {/* 3D carousel window */}
+      <div
+        className="rounded-2xl border border-border overflow-hidden"
+        style={{ perspective: '1400px' }}
+      >
+        <AnimatePresence initial={false} custom={direction} mode="wait">
+          <motion.div
+            key={pairIndex}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={springTransition}
+            style={{ backfaceVisibility: 'hidden', position: 'relative' }}
+          >
+            <SliderPair pair={PAIRS[pairIndex]} />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Right arrow */}
+      <button
+        onClick={() => navigate(1)}
+        className="absolute right-2 sm:right-0 top-1/2 -translate-y-1/2 sm:translate-x-[calc(100%+16px)] z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-border bg-bg-base/90 sm:bg-bg-base hover:border-accent hover:bg-accent/10 flex items-center justify-center text-text-muted hover:text-accent transition-all duration-200"
+        aria-label="Next"
+      >
+        <ChevronRight size={22} />
+      </button>
+
+      {/* Dots */}
+      <div className="flex justify-center gap-2 mt-5">
+        {PAIRS.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setPair([i, i > pairIndex ? 1 : -1])}
+            className={`h-1.5 rounded-full transition-all duration-300 ${i === pairIndex ? 'bg-accent w-5' : 'bg-border w-1.5 hover:bg-text-muted'}`}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+      </div>
+    </motion.div>
+  )
+}
+
+function SliderPair({ pair }: { pair: Pair }) {
+  const [position, setPosition] = useState(50)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const dragging = useRef(false)
+  const [imagesLoaded, setImagesLoaded] = useState({ before: false, after: false })
+
+  const updatePosition = useCallback((clientX: number) => {
+    const el = containerRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    setPosition((Math.max(0, Math.min(clientX - rect.left, rect.width)) / rect.width) * 100)
+  }, [])
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => { if (dragging.current) updatePosition(e.clientX) }
+    const onUp = () => { dragging.current = false }
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseup', onUp)
+    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp) }
+  }, [updatePosition])
+
+  const allLoaded = imagesLoaded.before && imagesLoaded.after
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative select-none overflow-hidden aspect-[4/3] bg-bg-base cursor-col-resize"
+      onMouseDown={(e) => { dragging.current = true; updatePosition(e.clientX) }}
+      onTouchMove={(e) => updatePosition(e.touches[0].clientX)}
+      onTouchStart={(e) => updatePosition(e.touches[0].clientX)}
+    >
+      {!allLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full border-2 border-border border-t-accent animate-spin" />
+        </div>
+      )}
+      <img src={pair.after} alt="After" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${allLoaded ? 'opacity-100' : 'opacity-0'}`} draggable={false} onLoad={() => setImagesLoaded((s) => ({ ...s, after: true }))} />
+      <div className="absolute inset-0 overflow-hidden" style={{ width: `${position}%` }}>
+        <img src={pair.before} alt="Before" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${allLoaded ? 'opacity-100' : 'opacity-0'}`} style={{ width: containerRef.current ? `${containerRef.current.offsetWidth}px` : '100%', maxWidth: 'none' }} draggable={false} onLoad={() => setImagesLoaded((s) => ({ ...s, before: true }))} />
+      </div>
+      {allLoaded && (
+        <>
+          <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-bg-base/80 backdrop-blur-sm border border-border">
+            <span className="font-body text-xs font-semibold text-text-muted uppercase tracking-wider">Before</span>
+          </div>
+          <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-accent/20 backdrop-blur-sm border border-accent/40">
+            <span className="font-body text-xs font-semibold text-accent uppercase tracking-wider">After</span>
+          </div>
+        </>
+      )}
+      <div className="absolute top-0 bottom-0 flex items-center justify-center" style={{ left: `${position}%`, transform: 'translateX(-50%)' }}>
+        <div className="absolute top-0 bottom-0 w-px bg-white/60" />
+        <div className="relative z-10 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center">
+          <GripVertical size={16} className="text-bg-base" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function Gallery() {
   const ref    = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
@@ -79,6 +244,15 @@ export default function Gallery() {
             Every car treated like our own.<br className="hidden sm:block" /> These are real clients, real results.
           </p>
         </motion.div>
+
+        {/* Before / After slider */}
+        <BeforeAfterSlider />
+
+        <div className="flex items-center gap-4 my-10">
+          <div className="flex-1 h-px bg-border" />
+          <span className="font-body text-xs uppercase tracking-widest text-text-muted">Our Work</span>
+          <div className="flex-1 h-px bg-border" />
+        </div>
 
         {/* Bento grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 auto-rows-[240px] lg:auto-rows-[200px]">
