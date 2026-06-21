@@ -73,9 +73,6 @@ export default function Footer() {
             <p className="font-body text-sm text-text-muted mb-6 leading-relaxed">
               {SITE_CONFIG.hours}
             </p>
-            <p className="font-body text-xs text-text-muted leading-relaxed">
-              Prices excl. VAT · confirmed after inspection
-            </p>
           </div>
         </div>
 

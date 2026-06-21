@@ -20,7 +20,7 @@ export const SITE_CONFIG = {
   },
 
   // ─── Hours ──────────────────────────────────────────────────────────────
-  hours: 'Mon–Sat 8am–7pm · Sun 9am–5pm',   // TODO: confirm with client
+  hours: 'Mon–Fri from 5pm · Sat–Sun 9am–9pm',
 
   // ─── Reviews / trust ────────────────────────────────────────────────────
   googleRating: '5.0',     // TODO: replace with real Google rating
