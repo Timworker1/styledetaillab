@@ -84,7 +84,7 @@ export default function Footer() {
           <p className="font-body text-xs text-text-muted">
             © {year} {SITE_CONFIG.businessName}. All rights reserved.
           </p>
-          <a href="/privacy.html" className="font-body text-xs text-text-muted hover:text-accent transition-colors">
+          <a href={`${base}privacy.html`} className="font-body text-xs text-text-muted hover:text-accent transition-colors">
             Privacy Policy
           </a>
         </div>
