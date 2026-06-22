@@ -167,6 +167,7 @@ function PageHero() {
                 <a
                   key={v.id}
                   href={`#service-${v.id}`}
+                  onClick={(e) => { e.preventDefault(); document.getElementById(`service-${v.id}`)?.scrollIntoView({ behavior: 'smooth' }) }}
                   className="font-body text-xs font-semibold uppercase tracking-widest text-text-muted hover:text-accent transition-colors duration-200"
                 >
                   {String(i + 1).padStart(2, '0')} {v.label}
