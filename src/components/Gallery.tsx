@@ -297,6 +297,7 @@ export default function Gallery() {
         </motion.div>
 
         {/* Before / After slider */}
+        <div id="before-after" />
         <BeforeAfterSlider />
 
         <div className="flex items-center gap-4 my-10">
