@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Phone, Menu, X, MessageCircle } from 'lucide-react'
 import { SITE_CONFIG } from '../config/site'
@@ -16,6 +17,7 @@ const NAV_LINKS = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -26,7 +28,12 @@ export default function Header() {
   const closeMenu = () => setMenuOpen(false)
 
   const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      navigate('/', { state: { scrollTo: id } })
+    }
   }
 
   return (
@@ -42,7 +49,7 @@ export default function Header() {
           <div className="flex items-center justify-between h-20 lg:h-24">
 
             {/* Logo */}
-            <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }} className="flex-shrink-0">
+            <a href="/" onClick={(e) => { e.preventDefault(); if (document.getElementById('services')) window.scrollTo({ top: 0, behavior: 'smooth' }); else navigate('/') }} className="flex-shrink-0">
               <img
                 src={`${base}gallery/logotip.png`}
                 alt="Emerald Mobile Detailing"
