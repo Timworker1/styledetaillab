@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Star, Shield, Droplets, ChevronDown } from 'lucide-react'
 import { SITE_CONFIG } from '../config/site'
@@ -14,6 +14,11 @@ const fadeUp = {
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    videoRef.current?.play().catch(() => {})
+  }, [])
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -37,6 +42,7 @@ export default function Hero() {
         className="absolute inset-0 z-0 scale-110"
       >
         <video
+          ref={videoRef}
           className="absolute inset-0 w-full h-full object-cover"
           autoPlay
           muted
@@ -114,12 +120,14 @@ export default function Hero() {
         >
           <a
             href="#calculator"
+            onClick={(e) => { e.preventDefault(); document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' }) }}
             className="btn-neon w-full sm:w-auto px-8 py-4 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-base duration-200"
           >
             Get My Instant Estimate
           </a>
           <a
             href="#before-after"
+            onClick={(e) => { e.preventDefault(); document.getElementById('before-after')?.scrollIntoView({ behavior: 'smooth' }) }}
             className="w-full sm:w-auto px-8 py-4 rounded-lg border border-border hover:border-text-muted text-text-primary font-body font-semibold text-base transition-colors duration-200"
           >
             See Our Work

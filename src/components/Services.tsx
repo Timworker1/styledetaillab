@@ -192,6 +192,7 @@ function PackageCard({ variant, index, selectedSize }: { variant: typeof SERVICE
         <div className="flex flex-col gap-2">
           <a
             href="#calculator"
+            onClick={(e) => { e.preventDefault(); document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' }) }}
             className={`flex items-center justify-center gap-2 w-full py-3 rounded-lg font-body font-semibold text-sm transition-colors duration-200
               ${isComplete
                 ? 'bg-accent hover:bg-accent-dark text-white'
@@ -284,6 +285,7 @@ function ConsultationCard() {
       </div>
       <a
         href="#contact"
+        onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) }}
         className="flex-shrink-0 flex items-center gap-2 px-6 py-3 rounded-lg border border-border hover:border-accent text-text-primary font-body font-semibold text-sm transition-colors duration-200 whitespace-nowrap"
       >
         Get a Consultation

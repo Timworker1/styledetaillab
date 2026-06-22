@@ -198,7 +198,9 @@ function EircodeChecker() {
                       <p className="font-body font-semibold text-text-primary text-sm">
                         Yes — we cover your area!
                       </p>
-                      <a href="#calculator" onClick={reset}
+                      <a
+                        href="#calculator"
+                        onClick={(e) => { e.preventDefault(); reset(); document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' }) }}
                         className="font-body text-xs text-accent hover:underline">
                         Get your instant estimate →
                       </a>

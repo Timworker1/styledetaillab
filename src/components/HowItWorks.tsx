@@ -70,6 +70,7 @@ export default function HowItWorks() {
         >
           <a
             href="#calculator"
+            onClick={(e) => { e.preventDefault(); document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' }) }}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-base transition-colors duration-200 shadow-lg shadow-accent/20"
           >
             Get My Instant Estimate

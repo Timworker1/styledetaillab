@@ -298,6 +298,7 @@ export default function Calculator() {
               {/* CTAs */}
               <a
                 href="#contact"
+                onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) }}
                 className="btn-neon block w-full py-3.5 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm text-center mb-3"
               >
                 Get My Quote
@@ -324,6 +325,7 @@ export default function Calculator() {
               </div>
               <a
                 href="#contact"
+                onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) }}
                 className="flex-shrink-0 px-4 py-2 rounded-lg border border-border hover:border-accent text-text-muted hover:text-text-primary font-body text-xs font-semibold transition-colors"
               >
                 Enquire

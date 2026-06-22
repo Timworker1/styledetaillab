@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import { Check, ArrowLeft, ArrowRight, Clock, Car, Sparkles, MessageCircle, Truck, Home, Eye, CreditCard } from 'lucide-react'
 import { SERVICE_VARIANTS, VEHICLE_SIZES } from '../config/pricing'
@@ -181,6 +181,7 @@ function PageHero() {
 }
 
 function ServiceSection({ variant, index }: { variant: typeof SERVICE_VARIANTS[0]; index: number }) {
+  const navigate = useNavigate()
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-100px' })
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
@@ -350,7 +351,8 @@ function ServiceSection({ variant, index }: { variant: typeof SERVICE_VARIANTS[0
               </div>
               <div className="sm:ml-auto flex flex-col sm:flex-row gap-3">
                 <a
-                  href="/#calculator"
+                  href="/"
+                  onClick={(e) => { e.preventDefault(); navigate('/', { state: { scrollTo: 'calculator' } }) }}
                   className="btn-neon flex items-center gap-2 px-6 py-3 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm whitespace-nowrap"
                 >
                   Get a Price
@@ -366,6 +368,7 @@ function ServiceSection({ variant, index }: { variant: typeof SERVICE_VARIANTS[0
 }
 
 function BottomCTA() {
+  const navigate = useNavigate()
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
@@ -394,7 +397,8 @@ function BottomCTA() {
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="/#calculator"
+            href="/"
+            onClick={(e) => { e.preventDefault(); navigate('/', { state: { scrollTo: 'calculator' } }) }}
             className="btn-neon w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-base"
           >
             Get My Instant Estimate

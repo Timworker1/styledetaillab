@@ -98,6 +98,7 @@ export default function WhatToExpect() {
         >
           <a
             href="#calculator"
+            onClick={(e) => { e.preventDefault(); document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' }) }}
             className="btn-neon inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm hover:-translate-y-0.5"
           >
             Get My Instant Estimate

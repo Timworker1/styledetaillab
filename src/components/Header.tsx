@@ -25,6 +25,10 @@ export default function Header() {
 
   const closeMenu = () => setMenuOpen(false)
 
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <>
       <header
@@ -38,7 +42,7 @@ export default function Header() {
           <div className="flex items-center justify-between h-20 lg:h-24">
 
             {/* Logo */}
-            <a href="#" className="flex-shrink-0">
+            <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }} className="flex-shrink-0">
               <img
                 src={`${base}gallery/logotip.png`}
                 alt="Emerald Mobile Detailing"
@@ -52,6 +56,7 @@ export default function Header() {
                 <a
                   key={link.href}
                   href={link.href}
+                  onClick={(e) => { e.preventDefault(); scrollTo(link.href.slice(1)) }}
                   className="font-body text-sm font-medium text-text-muted hover:text-text-primary transition-colors duration-200"
                 >
                   {link.label}
@@ -70,6 +75,7 @@ export default function Header() {
               </a>
               <a
                 href="#calculator"
+                onClick={(e) => { e.preventDefault(); scrollTo('calculator') }}
                 className="btn-neon px-5 py-2.5 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm"
               >
                 Get a Quote
@@ -102,7 +108,7 @@ export default function Header() {
                   <a
                     key={link.href}
                     href={link.href}
-                    onClick={closeMenu}
+                    onClick={(e) => { e.preventDefault(); scrollTo(link.href.slice(1)); closeMenu() }}
                     className="font-body font-medium text-text-muted hover:text-text-primary py-2.5 border-b border-border last:border-0 transition-colors"
                   >
                     {link.label}
@@ -110,7 +116,7 @@ export default function Header() {
                 ))}
                 <a
                   href="#calculator"
-                  onClick={closeMenu}
+                  onClick={(e) => { e.preventDefault(); scrollTo('calculator'); closeMenu() }}
                   className="mt-3 px-5 py-3 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm text-center transition-colors"
                 >
                   Get a Quote

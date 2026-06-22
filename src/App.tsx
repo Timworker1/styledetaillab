@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Preloader from './components/Preloader'
 import Header from './components/Header'
@@ -20,6 +20,18 @@ import Cursor from './components/Cursor'
 import ServicesPage from './pages/ServicesPage'
 
 function HomePage() {
+  const location = useLocation()
+
+  useEffect(() => {
+    const id = (location.state as { scrollTo?: string } | null)?.scrollTo
+    if (id) {
+      const raf = requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+      })
+      return () => cancelAnimationFrame(raf)
+    }
+  }, [])
+
   return (
     <div className="min-h-screen bg-bg-base text-text-primary">
       <Cursor />

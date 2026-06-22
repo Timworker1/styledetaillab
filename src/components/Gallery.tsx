@@ -210,6 +210,57 @@ function SliderPair({ pair }: { pair: Pair }) {
   )
 }
 
+function VideoCard({ src, label, sub }: { src: string; label: string; sub: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    videoRef.current?.play().catch(() => {})
+  }, [])
+
+  return (
+    <div
+      className="relative overflow-hidden rounded-2xl border border-border bg-bg-base group"
+      style={{ aspectRatio: '16/9' }}
+    >
+      <video
+        ref={videoRef}
+        src={src}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+      />
+
+      <div
+        className="absolute inset-0"
+        style={{ background: 'linear-gradient(135deg, rgba(10,10,11,0.65) 0%, transparent 60%)' }}
+      />
+
+      <div className="absolute top-4 left-4 flex items-center gap-2">
+        <span className={`font-heading font-black text-xs tracking-widest px-3 py-1 rounded-full ${
+          label === 'AFTER'
+            ? 'bg-accent text-white'
+            : 'bg-bg-base/80 border border-border text-text-muted'
+        }`}>
+          {label}
+        </span>
+      </div>
+
+      <div className="absolute bottom-4 left-4 flex items-center gap-2">
+        <div className="w-6 h-6 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
+          <Play size={9} className="text-white fill-white ml-0.5" />
+        </div>
+        <p className="font-body text-xs text-white/60">{sub}</p>
+      </div>
+
+      {label === 'AFTER' && (
+        <div className="absolute inset-0 rounded-2xl ring-1 ring-accent/30 pointer-events-none" />
+      )}
+    </div>
+  )
+}
+
 export default function Gallery() {
   const ref    = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
@@ -302,50 +353,7 @@ export default function Gallery() {
           className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3"
         >
           {VIDEOS.map(({ src, label, sub }) => (
-            <div
-              key={label}
-              className="relative overflow-hidden rounded-2xl border border-border bg-bg-base group"
-              style={{ aspectRatio: '16/9' }}
-            >
-              <video
-                src={src}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-              />
-
-              {/* Gradient overlay */}
-              <div
-                className="absolute inset-0"
-                style={{ background: 'linear-gradient(135deg, rgba(10,10,11,0.65) 0%, transparent 60%)' }}
-              />
-
-              {/* Label */}
-              <div className="absolute top-4 left-4 flex items-center gap-2">
-                <span className={`font-heading font-black text-xs tracking-widest px-3 py-1 rounded-full ${
-                  label === 'AFTER'
-                    ? 'bg-accent text-white'
-                    : 'bg-bg-base/80 border border-border text-text-muted'
-                }`}>
-                  {label}
-                </span>
-              </div>
-
-              {/* Bottom info */}
-              <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                <div className="w-6 h-6 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
-                  <Play size={9} className="text-white fill-white ml-0.5" />
-                </div>
-                <p className="font-body text-xs text-white/60">{sub}</p>
-              </div>
-
-              {/* Accent border on AFTER */}
-              {label === 'AFTER' && (
-                <div className="absolute inset-0 rounded-2xl ring-1 ring-accent/30 pointer-events-none" />
-              )}
-            </div>
+            <VideoCard key={label} src={src} label={label} sub={sub} />
           ))}
         </motion.div>
 
