@@ -31,49 +31,36 @@ export const SITE_CONFIG = {
   // ─── Eircode routing keys covered ───────────────────────────────────────
   // First 3 chars of an Irish Eircode (e.g. "D04"). Add/remove as needed.
   coveredEircodes: [
-    'D01','D02','D03','D04','D05','D06','D6W','D07','D08','D09','D10',
+    'D01','D02','D03','D04','D05','D06','D07','D08','D09','D10',
     'D11','D12','D13','D14','D15','D16','D17','D18','D20','D22','D24',
-    'A94','A96','A98','A63','A84',
-    'K32','K34','K36','K45','K56','K67',
-    'W23',
+    'A94','A96',
+    // North county Dublin + Ashbourne (client list)
+    'K32','K34','K36','K45','K56','K67','A84',
   ],
 
   // ─── Service areas (for SEO block + LocalBusiness schema) ───────────────
   areas: [
-    // City & inner suburbs
+    // Original 39 Dublin areas
     'Clontarf', 'Drumcondra', 'Glasnevin', 'Phibsborough',
-    'Fairview', 'Marino', 'East Wall', 'North Strand',
     'Rathgar', 'Rathmines', 'Ranelagh', 'Donnybrook',
     'Ballsbridge', 'Sandymount', 'Ringsend', 'Portobello',
     "Harold's Cross", 'Terenure', 'Templeogue', 'Crumlin',
     'Drimnagh', 'Inchicore', 'Kilmainham', 'Stoneybatter',
-    'Cabra', 'Kimmage', 'Walkinstown', 'Milltown',
-    // North city & north county
-    'Finglas', 'Artane', 'Raheny', 'Beaumont',
-    'Coolock', 'Donnycarney', 'Santry', 'Whitehall',
-    'Ballymun', 'Baldoyle', 'Donaghmede', 'Clarehall',
-    'Balgriffin', 'Kinsealy', 'Sutton', 'Howth',
-    'Portmarnock', 'Malahide', 'Swords', 'Donabate',
-    'Portrane', 'Rush', 'Lusk', 'Skerries',
-    'Balbriggan', 'Naul', 'Oldtown', 'Rolestown',
-    'Ballyboughal', 'Garristown', 'Cloghran', "St. Margaret's",
-    // Swords estates
+    'Cabra', 'Finglas', 'Artane', 'Raheny',
+    'Sutton', 'Howth', 'Malahide', 'Swords',
+    'Blanchardstown', 'Castleknock', 'Lucan', 'Clondalkin',
+    'Tallaght', 'Dundrum', 'Stillorgan', 'Blackrock',
+    'Dún Laoghaire', 'Dalkey', 'Killiney',
+    // Added — client list (north county / Swords estates / Meath)
+    'Donabate', 'Portrane', 'Rush', 'Lusk',
+    'Skerries', 'Balbriggan', 'Naul', 'Oldtown',
+    'Rolestown', 'Ballyboughal', 'Ashbourne', 'Garristown',
     'River Valley', 'Brackenstown', 'Applewood', 'Boroimhe',
-    'Holywell', 'Ridgewood', 'Knocksedan',
-    // West
-    'Blanchardstown', 'Castleknock', 'Clonsilla', 'Ongar',
-    'Ashtown', 'Chapelizod', 'Palmerstown', 'Ballyfermot',
-    'Lucan', 'Clondalkin', 'Tallaght', 'Firhouse',
-    'Rathfarnham', 'Knocklyon',
-    // South city & south county
-    'Dundrum', 'Churchtown', 'Clonskeagh', 'Goatstown',
-    'Ballinteer', 'Sandyford', 'Leopardstown', 'Stillorgan',
-    'Mount Merrion', 'Booterstown', 'Blackrock', 'Monkstown',
-    'Deansgrange', 'Foxrock', 'Cabinteely', 'Dún Laoghaire',
-    'Dalkey', 'Killiney',
-    // Commuter belt
-    'Bray', 'Greystones', 'Maynooth', 'Leixlip', 'Celbridge',
-    'Ashbourne',
+    'Holywell', 'Ridgewood', 'Knocksedan', 'Cloghran',
+    "St. Margaret's", 'Santry', 'Ballymun', 'Clonsilla',
+    'Ongar', 'Portmarnock', 'Kinsealy', 'Baldoyle',
+    'Donaghmede', 'Clarehall', 'Balgriffin', 'Coolock',
+    'Whitehall', 'Beaumont',
   ],
 
   // ─── Form ───────────────────────────────────────────────────────────────

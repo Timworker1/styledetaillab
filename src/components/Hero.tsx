@@ -1,7 +1,9 @@
-import { useRef, useEffect } from 'react'
+import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { Star, Shield, Droplets, ChevronDown } from 'lucide-react'
+import { Star, Shield, Droplets, Car } from 'lucide-react'
 import { SITE_CONFIG } from '../config/site'
+
+const base = import.meta.env.BASE_URL
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -14,159 +16,190 @@ const fadeUp = {
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
 
-  useEffect(() => {
-    videoRef.current?.play().catch(() => {})
-  }, [])
-
+  // Tall section + sticky inner = the hero pins while you scroll through the
+  // dirty → clean transition, then releases once it's complete.
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start start', 'end start'],
+    offset: ['start start', 'end end'],
   })
 
-  // Video moves up slower than scroll — creates depth
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '35%'])
-  // Content fades and lifts slightly as you scroll away
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-12%'])
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
+  // Dirty → clean crossfade — completes near the end of the pin
+  const cleanOpacity = useTransform(scrollYProgress, [0.05, 0.85], [0, 1])
+  const progressWidth = useTransform(scrollYProgress, [0.05, 0.85], ['0%', '100%'])
+  const beforeOpacity = useTransform(scrollYProgress, [0.1, 0.55], [1, 0.35])
+  const afterOpacity = useTransform(scrollYProgress, [0.4, 0.85], [0.35, 1])
+  // Content + progress bar leave only once the reveal is finished
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-8%'])
+  const contentOpacity = useTransform(scrollYProgress, [0.85, 1], [1, 0])
+  const barOpacity = useTransform(scrollYProgress, [0.9, 1], [1, 0])
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
-    >
-      {/* ── Parallax background layer ──────────────────────────────────── */}
-      <motion.div
-        style={{ y: bgY }}
-        className="absolute inset-0 z-0 scale-110"
-      >
-        <video
-          ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={`${import.meta.env.BASE_URL}hero/hero-poster.jpg`}
-          src={`${import.meta.env.BASE_URL}hero/hero-video.mp4`}
-        />
+    <section ref={sectionRef} className="relative h-[220vh]">
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col items-center justify-center">
 
-        {/* Dark gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-bg-base/75 via-bg-base/45 to-bg-base" />
+        {/* ── Before / After images ──────────────────────────────────── */}
+        <div className="absolute inset-0 z-0">
+          {/* Dirty (before) — base layer */}
+          <img
+            src={`${base}gallery/audi-hero-dirty.webp`}
+            alt="Dirty Audi Q7 before mobile detailing"
+            className="absolute inset-0 w-full h-full object-cover"
+            fetchPriority="high"
+          />
+          {/* Clean (after) — crossfades in on scroll */}
+          <motion.img
+            src={`${base}gallery/audi-hero-clean.webp`}
+            alt="Audi Q7 after mobile detailing — showroom finish"
+            style={{ opacity: cleanOpacity }}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
 
-        {/* Emerald studio glow */}
-        <div
-          className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full opacity-10 pointer-events-none"
-          style={{ background: 'radial-gradient(circle, #00572F 0%, transparent 70%)' }}
-        />
-      </motion.div>
+          {/* Light gradient — keeps car visible, blends into section below */}
+          <div className="absolute inset-0 bg-gradient-to-b from-bg-base/60 via-bg-base/30 to-bg-base" />
 
-      {/* ── Content — fades out on scroll ──────────────────────────────── */}
-      <motion.div
-        style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-32 pb-24 lg:pt-40"
-      >
-        {/* Eyebrow */}
-        <motion.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={0.1}
-          className="font-body text-sm font-semibold uppercase tracking-widest text-accent-light mb-5"
+          {/* Emerald studio glow */}
+          <div
+            className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full opacity-10 pointer-events-none"
+            style={{ background: 'radial-gradient(circle, #00572F 0%, transparent 70%)' }}
+          />
+        </div>
+
+        {/* ── Content ─────────────────────────────────────────────────── */}
+        <motion.div
+          style={{ y: contentY, opacity: contentOpacity }}
+          className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-28 pb-28 lg:pt-32"
         >
-          Dublin's Premium Mobile Detailing
-        </motion.p>
+          {/* Eyebrow */}
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={0.1}
+            className="font-body text-sm font-semibold uppercase tracking-widest text-accent-light mb-5"
+          >
+            Dublin's Premium Mobile Detailing
+          </motion.p>
 
-        {/* Headline — per-line clip-path reveal */}
-        <h1 className="font-heading font-black uppercase tracking-heading text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-text-primary leading-none mb-6">
-          {[
-            { text: 'Showroom',      delay: 0.2,  cls: 'chrome-text' },
-            { text: 'Results.',      delay: 0.38, cls: 'text-accent-gradient' },
-            { text: 'At Your Door.', delay: 0.56, cls: 'chrome-text' },
-          ].map(({ text, delay, cls }) => (
-            <div key={text} className="overflow-hidden">
+          {/* Headline — per-line clip-path reveal */}
+          <h1 className="font-heading font-black uppercase tracking-heading text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-text-primary leading-none mb-6">
+            {[
+              { text: 'Showroom',      delay: 0.2,  cls: 'chrome-text' },
+              { text: 'Results.',      delay: 0.38, cls: 'text-accent-gradient' },
+              { text: 'At Your Door.', delay: 0.56, cls: 'chrome-text' },
+            ].map(({ text, delay, cls }) => (
+              <div key={text} className="overflow-hidden">
+                <motion.div
+                  initial={{ y: '105%' }}
+                  animate={{ y: '0%' }}
+                  transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
+                  className={cls || undefined}
+                >
+                  {text}
+                </motion.div>
+              </div>
+            ))}
+          </h1>
+
+          {/* Sub-heading */}
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={0.4}
+            className="font-body text-lg sm:text-xl text-text-muted max-w-xl mx-auto mb-10"
+          >
+            We come to you — fully equipped with our own water & power.
+            Professional detailing without leaving home.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={0.55}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14"
+          >
+            <a
+              href="#calculator"
+              onClick={(e) => { e.preventDefault(); document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' }) }}
+              className="btn-neon w-full sm:w-auto px-8 py-4 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-base duration-200"
+            >
+              Get My Instant Estimate
+            </a>
+            <a
+              href="#before-after"
+              onClick={(e) => { e.preventDefault(); document.getElementById('before-after')?.scrollIntoView({ behavior: 'smooth' }) }}
+              className="w-full sm:w-auto px-8 py-4 rounded-lg border border-border hover:border-text-muted text-text-primary font-body font-semibold text-base transition-colors duration-200"
+            >
+              See Our Work
+            </a>
+          </motion.div>
+
+          {/* Trust strip */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={0.7}
+            className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3"
+          >
+            <TrustBadge icon={<StarRow />} label={`Google ${SITE_CONFIG.googleRating} ★`} />
+            <Divider />
+            <TrustBadge icon={<Shield size={15} className="text-accent" />} label="Fully Insured" />
+            <Divider />
+            <TrustBadge icon={<Droplets size={15} className="text-accent" />} label="Own Water & Power" />
+          </motion.div>
+        </motion.div>
+
+        {/* ── Before → After progress bar (car drives through the wash) ── */}
+        <motion.div
+          style={{ opacity: barOpacity }}
+          className="absolute bottom-24 lg:bottom-12 left-1/2 -translate-x-1/2 z-20 w-[min(88vw,420px)]"
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center gap-3 px-5 py-3 rounded-full border border-border bg-bg-base/40 backdrop-blur-md"
+          >
+            <motion.span
+              style={{ opacity: beforeOpacity }}
+              className="font-body text-xs font-semibold uppercase tracking-widest text-text-muted whitespace-nowrap"
+            >
+              Before
+            </motion.span>
+
+            {/* Track */}
+            <div className="relative flex-1 h-1.5 rounded-full bg-border/70">
               <motion.div
-                initial={{ y: '105%' }}
-                animate={{ y: '0%' }}
-                transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
-                className={cls || undefined}
+                style={{ width: progressWidth }}
+                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-accent-dark to-accent"
+              />
+              {/* Rider — a car driving along the progress */}
+              <motion.div
+                style={{ left: progressWidth }}
+                className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2"
               >
-                {text}
+                <span className="absolute inset-0 -m-1 rounded-full bg-accent/40 animate-ping" />
+                <span className="relative flex items-center justify-center w-7 h-7 rounded-full bg-accent shadow-[0_0_14px_rgba(31,163,122,0.9)]">
+                  <Car size={14} className="text-white" strokeWidth={2.2} />
+                </span>
               </motion.div>
             </div>
-          ))}
-        </h1>
 
-        {/* Sub-heading */}
-        <motion.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={0.4}
-          className="font-body text-lg sm:text-xl text-text-muted max-w-xl mx-auto mb-10"
-        >
-          We come to you — fully equipped with our own water & power.
-          Professional detailing without leaving home.
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={0.55}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
-        >
-          <a
-            href="#calculator"
-            onClick={(e) => { e.preventDefault(); document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' }) }}
-            className="btn-neon w-full sm:w-auto px-8 py-4 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-base duration-200"
-          >
-            Get My Instant Estimate
-          </a>
-          <a
-            href="#before-after"
-            onClick={(e) => { e.preventDefault(); document.getElementById('before-after')?.scrollIntoView({ behavior: 'smooth' }) }}
-            className="w-full sm:w-auto px-8 py-4 rounded-lg border border-border hover:border-text-muted text-text-primary font-body font-semibold text-base transition-colors duration-200"
-          >
-            See Our Work
-          </a>
+            <motion.span
+              style={{ opacity: afterOpacity }}
+              className="font-body text-xs font-semibold uppercase tracking-widest text-accent whitespace-nowrap"
+            >
+              After
+            </motion.span>
+          </motion.div>
         </motion.div>
 
-        {/* Trust strip */}
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={0.7}
-          className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3"
-        >
-          <TrustBadge icon={<StarRow />} label={`Google ${SITE_CONFIG.googleRating} ★`} />
-          <Divider />
-          <TrustBadge icon={<Shield size={15} className="text-accent" />} label="Fully Insured" />
-          <Divider />
-          <TrustBadge icon={<Droplets size={15} className="text-accent" />} label="Own Water & Power" />
-        </motion.div>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.6 }}
-        style={{ opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0]) }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 hidden lg:block"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ChevronDown size={22} className="text-text-muted" />
-        </motion.div>
-      </motion.div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-border z-10" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-border z-10" />
+      </div>
     </section>
   )
 }
