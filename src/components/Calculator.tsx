@@ -4,11 +4,9 @@ import { Info, Check, ChevronRight, MessageCircle } from 'lucide-react'
 import {
   SERVICE_VARIANTS,
   VEHICLE_SIZES,
-  FINISH_OPTIONS,
   ADD_ONS,
   type ServiceVariant,
   type VehicleSize,
-  type FinishType,
 } from '../config/pricing'
 import { SITE_CONFIG } from '../config/site'
 
@@ -20,16 +18,14 @@ function formatHours(h: number) {
 function buildWhatsAppMessage(
   variant: ServiceVariant,
   size: VehicleSize,
-  finish: FinishType,
   addOnIds: string[],
   total: number
 ) {
   const v = SERVICE_VARIANTS.find((x) => x.id === variant)!
   const s = VEHICLE_SIZES.find((x) => x.id === size)!
-  const f = FINISH_OPTIONS.find((x) => x.id === finish)!
   const extras = ADD_ONS.filter((a) => addOnIds.includes(a.id))
 
-  let msg = `Hi! I'd like a ${v.label} Detail — ${s.label} (${s.description}), ${f.label} finish`
+  let msg = `Hi! I'd like a ${v.label} Detail — ${s.label} (${s.description})`
   if (extras.length) msg += ` + ${extras.map((e) => e.label).join(', ')}`
   msg += ` (est. from €${total}). When's your next availability?`
   return encodeURIComponent(msg)
@@ -38,19 +34,16 @@ function buildWhatsAppMessage(
 export default function Calculator() {
   const [variant, setVariant] = useState<ServiceVariant>('complete')
   const [size, setSize] = useState<VehicleSize>('M')
-  const [finish, setFinish] = useState<FinishType>('wax')
   const [addOns, setAddOns] = useState<Set<string>>(new Set())
   const [tooltip, setTooltip] = useState<string | null>(null)
   const uid = useId()
 
   const sizeData = VEHICLE_SIZES.find((s) => s.id === size)!
-  const finishData = FINISH_OPTIONS.find((f) => f.id === finish)!
   const variantData = SERVICE_VARIANTS.find((v) => v.id === variant)!
 
   const basePrice = sizeData.prices[variant]
-  const finishSurcharge = finishData.surcharge
   const addOnTotal = ADD_ONS.filter((a) => addOns.has(a.id)).reduce((sum, a) => sum + a.price, 0)
-  const total = basePrice + finishSurcharge + addOnTotal
+  const total = basePrice + addOnTotal
   const duration = sizeData.durationHours[variant]
 
   const toggleAddOn = (id: string) =>
@@ -60,7 +53,7 @@ export default function Calculator() {
       return next
     })
 
-  const whatsappUrl = `https://wa.me/${SITE_CONFIG.whatsapp}?text=${buildWhatsAppMessage(variant, size, finish, [...addOns], total)}`
+  const whatsappUrl = `https://wa.me/${SITE_CONFIG.whatsapp}?text=${buildWhatsAppMessage(variant, size, [...addOns], total)}`
 
   return (
     <section id="calculator" className="py-24 px-4 sm:px-6 lg:px-8 bg-bg-base">
@@ -163,42 +156,8 @@ export default function Calculator() {
               </div>
             </Card>
 
-            {/* Step 3 — Finish */}
-            <Card step="03" title="Paint finish">
-              <div className="grid grid-cols-2 gap-3">
-                {FINISH_OPTIONS.map((f) => (
-                  <button
-                    key={f.id}
-                    onClick={() => setFinish(f.id)}
-                    className={`flex flex-col items-start text-left p-4 rounded-lg border transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
-                      finish === f.id
-                        ? 'border-accent bg-accent/10'
-                        : 'border-border hover:border-text-muted'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between w-full mb-2">
-                      <span className={`font-body font-semibold text-sm ${finish === f.id ? 'text-text-primary' : 'text-text-muted'}`}>
-                        {f.label}
-                      </span>
-                      {f.surcharge > 0 && (
-                        <span className="font-body text-xs font-semibold text-accent">
-                          +€{f.surcharge}
-                        </span>
-                      )}
-                      {f.surcharge === 0 && (
-                        <span className="font-body text-xs text-text-muted">Included</span>
-                      )}
-                    </div>
-                    <p className="font-body text-xs text-text-muted leading-relaxed">
-                      {f.description}
-                    </p>
-                  </button>
-                ))}
-              </div>
-            </Card>
-
-            {/* Step 4 — Add-ons */}
-            <Card step="04" title="Add-ons">
+            {/* Step 3 — Add-ons */}
+            <Card step="03" title="Add-ons">
               <div className="grid sm:grid-cols-2 gap-2">
                 {ADD_ONS.map((addon) => {
                   const active = addOns.has(addon.id)
@@ -273,9 +232,6 @@ export default function Calculator() {
                   label={`${variantData.label} — ${sizeData.label}`}
                   value={`€${basePrice}`}
                 />
-                {finishSurcharge > 0 && (
-                  <SummaryRow label={`${finishData.label} finish`} value={`+€${finishSurcharge}`} />
-                )}
                 {ADD_ONS.filter((a) => addOns.has(a.id)).map((a) => (
                   <SummaryRow key={a.id} label={a.label} value={`+€${a.price}`} />
                 ))}

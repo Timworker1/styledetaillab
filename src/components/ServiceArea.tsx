@@ -4,7 +4,7 @@ import { MapPin, Check, X, Search, Car, Clock, Shield } from 'lucide-react'
 import { SITE_CONFIG } from '../config/site'
 
 const STATS = [
-  { icon: MapPin, value: '39',       label: 'Dublin Areas'    },
+  { icon: MapPin, value: `${SITE_CONFIG.areas.length}`, label: 'Areas Covered'   },
   { icon: Car,    value: '0',        label: 'Call-out Fee'    },
   { icon: Clock,  value: 'Same Day', label: 'Often Available' },
   { icon: Shield, value: '100%',     label: 'Satisfaction'    },

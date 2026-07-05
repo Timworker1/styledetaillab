@@ -26,7 +26,11 @@ function HomePage() {
     const id = (location.state as { scrollTo?: string } | null)?.scrollTo
     if (id) {
       const raf = requestAnimationFrame(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+        const el = document.getElementById(id)
+        if (!el) return
+        const headerOffset = window.innerWidth >= 1024 ? 112 : 96
+        const top = el.getBoundingClientRect().top + window.scrollY - headerOffset - 8
+        window.scrollTo({ top, behavior: 'smooth' })
       })
       return () => cancelAnimationFrame(raf)
     }

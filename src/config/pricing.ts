@@ -49,7 +49,7 @@ export const SERVICE_VARIANTS: ServiceVariantOption[] = [
       'Wheels & Wheel Arches — decontaminated, tyre dressing applied',
       'Glass & Seals — streak-free polish, rubber seals treated',
       'Trim & Details — plastics, tips, cameras & sensors dressed',
-      'Paint Protection — protective finish for shine & longevity',
+      'Wax Protection — included as standard: depth of colour, wet-look gloss & water repellency',
     ],
   },
   {
@@ -64,7 +64,7 @@ export const SERVICE_VARIANTS: ServiceVariantOption[] = [
       'Headlining (Ceiling) — cleaned & refreshed throughout',
       'Interior Glass — streak-free polish inside',
       'Plastics & Trim — dressed & UV-protected',
-      'Ozone Treatment — eliminates odours at the source',
+      'Ozone Sanitisation — kills bacteria, mould & germs, eliminating odours at the source',
     ],
   },
   {
@@ -83,8 +83,8 @@ export const SERVICE_VARIANTS: ServiceVariantOption[] = [
       'Headlining (Ceiling) — cleaned & refreshed throughout',
       'Glass — streak-free inside and out',
       'Trim & Details — plastics, tips, cameras & sensors dressed',
-      'Ozone Treatment — eliminates odours at the source',
-      'Paint Protection — protective finish for shine & longevity',
+      'Ozone Sanitisation — kills bacteria, mould & germs, eliminating odours at the source',
+      'Wax Protection — included as standard: depth of colour, wet-look gloss & water repellency',
     ],
   },
 ]
@@ -97,7 +97,7 @@ export const VEHICLE_SIZES: VehicleSizeOption[] = [
     label: 'Small',
     description: 'Small hatchback',
     examples: ['VW Polo', 'Toyota Yaris', 'Ford Fiesta', 'Opel Corsa'],
-    prices: { exterior: 110, interior: 120, complete: 200 },
+    prices: { exterior: 90, interior: 110, complete: 180 },
     durationHours: { exterior: 3, interior: 3, complete: 5 },
   },
   {
@@ -105,7 +105,7 @@ export const VEHICLE_SIZES: VehicleSizeOption[] = [
     label: 'Medium',
     description: 'Saloon / estate / compact SUV (≤4.6 m)',
     examples: ['BMW 3 Series', 'Audi A4', 'Skoda Octavia', 'VW Tiguan', 'Tesla Model 3'],
-    prices: { exterior: 130, interior: 140, complete: 240 },
+    prices: { exterior: 110, interior: 130, complete: 200 },
     durationHours: { exterior: 3.5, interior: 3.5, complete: 6 },
   },
   {
@@ -113,7 +113,7 @@ export const VEHICLE_SIZES: VehicleSizeOption[] = [
     label: 'Large',
     description: 'Large SUV / executive saloon',
     examples: ['BMW X5', 'Audi Q7', 'Land Rover Discovery', 'Mercedes E-Class'],
-    prices: { exterior: 160, interior: 170, complete: 290 },
+    prices: { exterior: 130, interior: 150, complete: 220 },
     durationHours: { exterior: 4.5, interior: 4.5, complete: 7 },
   },
   {
@@ -121,7 +121,7 @@ export const VEHICLE_SIZES: VehicleSizeOption[] = [
     label: 'XL',
     description: 'Van / 7-seater MPV',
     examples: ['VW Transporter', 'Ford Transit Custom', 'VW Caravelle'],
-    prices: { exterior: 190, interior: 200, complete: 340 },
+    prices: { exterior: 150, interior: 170, complete: 240 },
     durationHours: { exterior: 5.5, interior: 5.5, complete: 8 },
   },
 ]
@@ -148,23 +148,10 @@ export const FINISH_OPTIONS: FinishOption[] = [
 
 export const ADD_ONS: AddOn[] = [
   {
-    id: 'spray-ceramic',
-    label: 'Spray Ceramic Coating',
-    // Note: this is a true coating bonded to paint (1–2 yr), different from the Ceramic Sealant finish option above
-    tooltip: '1–2 year protection — a true coating layer bonded to the paint surface. A longer-lasting upgrade beyond the Ceramic Sealant finish.',
-    price: 250,
-  },
-  {
     id: 'glass-ceramic',
-    label: 'Glass Ceramic / Rain Repellent',
-    tooltip: 'Hydrophobic coating applied to windscreen and all glass — dramatically improves visibility in rain.',
-    price: 60,
-  },
-  {
-    id: 'wheel-ceramic',
-    label: 'Wheel Ceramic Coating',
-    tooltip: 'Ceramic protection on all four wheels — repels brake dust and makes future cleaning far easier.',
-    price: 90,
+    label: 'Anti-Rain Glass Treatment',
+    tooltip: 'A water-repellent coating for your windscreen and all glass — rain beads up and rolls straight off, so you see clearly even in heavy Irish downpours.',
+    price: 40,
   },
   {
     id: 'engine-bay',
@@ -174,8 +161,8 @@ export const ADD_ONS: AddOn[] = [
   },
   {
     id: 'trim-restoration',
-    label: 'Trim Restoration & Protection',
-    tooltip: 'Restores faded exterior plastic trim to deep black, with UV protection to prevent future fading.',
+    label: 'Trim Protection',
+    tooltip: 'Protects exterior plastic trim with a deep black, UV-resistant finish that keeps it looking rich and prevents fading.',
     price: 40,
   },
   {
@@ -188,6 +175,6 @@ export const ADD_ONS: AddOn[] = [
     id: 'pet-hair',
     label: 'Pet Hair Removal',
     tooltip: 'Specialist removal of deeply embedded pet hair from seats, carpets and boot area.',
-    price: 40,
+    price: 30,
   },
 ]

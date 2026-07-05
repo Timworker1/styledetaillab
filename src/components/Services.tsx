@@ -245,16 +245,9 @@ function AddOnsGrid() {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="mb-10"
     >
-      {/* First row: 4 items */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
-        {ADD_ONS.slice(0, 4).map((addon) => (
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        {ADD_ONS.map((addon) => (
           <AddonCard key={addon.id} addon={addon} />
-        ))}
-      </div>
-      {/* Second row: 3 items centered */}
-      <div className="grid grid-cols-2 sm:flex sm:justify-center gap-3">
-        {ADD_ONS.slice(4).map((addon) => (
-          <AddonCard key={addon.id} addon={addon} className="sm:w-[calc(25%-9px)]" />
         ))}
       </div>
     </motion.div>

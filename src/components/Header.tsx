@@ -7,11 +7,11 @@ import { SITE_CONFIG } from '../config/site'
 const base = import.meta.env.BASE_URL
 
 const NAV_LINKS = [
-  { label: 'Services', href: '#services' },
-  { label: 'Calculator', href: '#calculator' },
-  { label: 'Before & After', href: '#before-after' },
-  { label: 'Reviews', href: '#reviews' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Services', id: 'services' },
+  { label: 'Calculator', id: 'calculator' },
+  { label: 'Before & After', id: 'before-after' },
+  { label: 'Reviews', id: 'reviews' },
+  { label: 'Contact', id: 'contact' },
 ]
 
 export default function Header() {
@@ -28,12 +28,21 @@ export default function Header() {
   const closeMenu = () => setMenuOpen(false)
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' })
-    } else {
+    if (!document.getElementById(id)) {
       navigate('/', { state: { scrollTo: id } })
+      return
     }
+    // Defer the scroll to the next tick. Running window.scrollTo synchronously
+    // inside the click handler (while the mobile menu closes and React
+    // re-renders) causes mobile browsers to cancel the smooth scroll, so the
+    // page doesn't move. Deferring lets the click/layout settle first.
+    setTimeout(() => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const headerOffset = window.innerWidth >= 1024 ? 112 : 96
+      const top = el.getBoundingClientRect().top + window.scrollY - headerOffset - 8
+      window.scrollTo({ top, behavior: 'smooth' })
+    }, 60)
   }
 
   return (
@@ -46,14 +55,14 @@ export default function Header() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20 lg:h-24">
+          <div className="flex items-center justify-between h-24 lg:h-28">
 
             {/* Logo */}
             <a href="/" onClick={(e) => { e.preventDefault(); if (document.getElementById('services')) window.scrollTo({ top: 0, behavior: 'smooth' }); else navigate('/') }} className="flex-shrink-0">
               <img
                 src={`${base}gallery/logotip.png`}
-                alt="Emerald Mobile Detailing"
-                className="h-16 lg:h-20 w-auto object-contain"
+                alt="StyleDetailLab — Vehicle Protection"
+                className="h-20 lg:h-24 w-auto object-contain"
               />
             </a>
 
@@ -61,9 +70,9 @@ export default function Header() {
             <nav className="hidden lg:flex items-center gap-8">
               {NAV_LINKS.map((link) => (
                 <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => { e.preventDefault(); scrollTo(link.href.slice(1)) }}
+                  key={link.id}
+                  href={`#${link.id}`}
+                  onClick={(e) => { e.preventDefault(); scrollTo(link.id) }}
                   className="font-body text-sm font-medium text-text-muted hover:text-text-primary transition-colors duration-200"
                 >
                   {link.label}
@@ -113,9 +122,9 @@ export default function Header() {
               <nav className="flex flex-col px-4 py-4 gap-1">
                 {NAV_LINKS.map((link) => (
                   <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={(e) => { e.preventDefault(); scrollTo(link.href.slice(1)); closeMenu() }}
+                    key={link.id}
+                    href={`#${link.id}`}
+                    onClick={(e) => { e.preventDefault(); closeMenu(); scrollTo(link.id) }}
                     className="font-body font-medium text-text-muted hover:text-text-primary py-2.5 border-b border-border last:border-0 transition-colors"
                   >
                     {link.label}
@@ -123,7 +132,7 @@ export default function Header() {
                 ))}
                 <a
                   href="#calculator"
-                  onClick={(e) => { e.preventDefault(); scrollTo('calculator'); closeMenu() }}
+                  onClick={(e) => { e.preventDefault(); closeMenu(); scrollTo('calculator') }}
                   className="mt-3 px-5 py-3 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm text-center transition-colors"
                 >
                   Get a Quote
