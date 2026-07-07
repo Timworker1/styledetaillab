@@ -163,7 +163,7 @@ function VideoTile({ src, kind }: { src: string; kind: 'BEFORE' | 'AFTER' }) {
     if (!v) return
     const io = new IntersectionObserver(
       ([entry]) => { entry.isIntersecting ? v.play().catch(() => {}) : v.pause() },
-      { threshold: 0.25 }
+      { threshold: 0.5 }
     )
     io.observe(v)
     return () => io.disconnect()

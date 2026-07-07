@@ -50,7 +50,7 @@ export default function Header() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-bg-base/95 backdrop-blur-md border-b border-border'
+            ? 'bg-bg-base/95 lg:backdrop-blur-md border-b border-border'
             : 'bg-transparent'
         }`}
       >
@@ -144,7 +144,7 @@ export default function Header() {
       </header>
 
       {/* Mobile sticky bottom bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-bg-panel/95 backdrop-blur-md border-t border-border px-4 py-3 flex gap-3">
+      <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-bg-panel border-t border-border px-4 py-3 flex gap-3">
         <a
           href={`tel:${SITE_CONFIG.phone}`}
           className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border border-border text-text-primary font-body font-semibold text-sm transition-colors hover:border-accent"
