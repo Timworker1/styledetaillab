@@ -79,7 +79,7 @@ export default function Hero() {
             animate="show"
             custom={0}
             style={{ filter: 'drop-shadow(0 2px 14px rgba(0,0,0,0.65))' }}
-            className="h-20 sm:h-24 w-auto object-contain mx-auto mb-6"
+            className="h-28 sm:h-36 w-auto object-contain mx-auto mb-6"
           />
 
           {/* Eyebrow */}
@@ -96,9 +96,9 @@ export default function Hero() {
           {/* Headline — per-line clip-path reveal */}
           <h1 className="font-heading font-black uppercase tracking-heading text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-text-primary leading-none mb-6">
             {[
-              { text: 'Showroom',      delay: 0.2,  cls: 'chrome-text' },
-              { text: 'Results.',      delay: 0.38, cls: 'text-accent-gradient' },
-              { text: 'At Your Door.', delay: 0.56, cls: 'chrome-text' },
+              { text: 'We Bring The', delay: 0.2,  cls: 'chrome-text' },
+              { text: 'Showroom',     delay: 0.38, cls: 'text-accent-gradient' },
+              { text: 'To You.',      delay: 0.56, cls: 'chrome-text' },
             ].map(({ text, delay, cls }) => (
               <div key={text} className="overflow-hidden">
                 <motion.div
