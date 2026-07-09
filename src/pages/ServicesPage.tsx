@@ -22,8 +22,8 @@ interface ServiceMeta {
 
 const SERVICE_META: Record<string, ServiceMeta> = {
   exterior: {
-    photo: `${base}gallery/bmw-grey.jpg`,
-    photoPosition: 'object-[center_30%]',
+    photo: `${base}gallery/service-exterior.webp`,
+    photoPosition: 'object-[center_45%]',
     photoCar: 'BMW 3 Series - Exterior Detail',
     badge: 'Most Requested',
     headline: 'Beyond a wash. A proper detail.',
@@ -31,18 +31,18 @@ const SERVICE_META: Record<string, ServiceMeta> = {
     perfectFor: ['Pre-event prep', 'Maintenance detail', 'Recently purchased car', 'Post-winter refresh'],
   },
   interior: {
-    photo: `${base}gallery/audi.jpg`,
-    photoPosition: 'object-[center_35%]',
-    photoCar: 'Audi A Series - Interior Detail',
+    photo: `${base}gallery/service-interior.webp`,
+    photoPosition: 'object-[center_45%]',
+    photoCar: 'Range Rover Sport - Interior Detail',
     badge: 'Most Transformative',
     headline: 'Your interior, completely refreshed.',
     description: `The inside of your car gets used every day - and it shows in ways a quick wipe-down can't fix. We vacuum every surface thoroughly, then steam clean the dashboard, vents, door cards, cup holders and pedals using professional equipment that sanitises as it cleans. Leather is treated and conditioned; fabric is deep-cleaned and extracted. Seat belts are fully extended and cleaned, the headlining is carefully refreshed, and all interior glass is polished streak-free. Every plastic and trim surface is dressed and UV-protected. We finish with a professional ozone sanitisation treatment - a hospital-grade process that penetrates every vent, fabric and hidden crevice to destroy bacteria, mould spores and the germs that cause odours. It doesn't mask smells, it eliminates them at the source, leaving a cabin that isn't just clean but genuinely hygienic and healthier to breathe in - especially important for families, children and anyone with allergies.`,
     perfectFor: ['Families & pets', 'Smoke odour removal', 'Post-winter interior', 'Pre-sale preparation'],
   },
   complete: {
-    photo: `${base}gallery/range-rover.jpg`,
-    photoPosition: 'object-[center_40%]',
-    photoCar: 'Range Rover - Complete Detail',
+    photo: `${base}gallery/service-complete.webp`,
+    photoPosition: 'object-[center_35%]',
+    photoCar: 'Range Rover Velar - Complete Detail',
     badge: 'Best Value',
     headline: 'Every inch. Inside and out.',
     description: `The Complete Detail is for those who want the best result possible - every surface, inside and out, treated in a single visit. We work through the full exterior process: snow foam prewash, two-bucket hand wash, blow dry, chemical decontamination, wheel and arch cleaning, glass polishing and a protective paint finish. Then we move inside: full vacuum, professional steam clean, leather or fabric treatment, seat belts, headlining, interior glass and all trim dressed and protected. We close with a professional ozone sanitisation treatment that reaches deep into vents, fabrics and every crevice - killing bacteria, mould and odour-causing germs to leave the cabin not just fresh, but genuinely hygienic and healthier to breathe in. The result is a car that looks, feels and smells like it just left the showroom.`,
