@@ -211,10 +211,10 @@ function PackageCard({ variant, index, selectedSize }: { variant: typeof SERVICE
           </a>
           <Link
             to="/services"
-            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg font-body text-sm text-text-muted hover:text-accent transition-colors duration-200"
+            className="group/vd flex items-center justify-center gap-2 w-full py-2.5 rounded-lg border border-border hover:border-accent/60 text-text-secondary hover:text-accent font-body font-medium text-sm transition-colors duration-200"
           >
             View Full Details
-            <ArrowRight size={13} />
+            <ArrowRight size={13} className="transition-transform duration-200 group-hover/vd:translate-x-0.5" />
           </Link>
         </div>
       </div>
