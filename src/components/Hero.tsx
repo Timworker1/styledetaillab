@@ -70,6 +70,18 @@ export default function Hero() {
           style={{ y: contentY, opacity: contentOpacity }}
           className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-28 pb-28 lg:pt-32"
         >
+          {/* Brand logo */}
+          <motion.img
+            src={`${base}gallery/logotip.png`}
+            alt="StyleDetailLab — Vehicle Protection"
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={0}
+            style={{ filter: 'drop-shadow(0 2px 14px rgba(0,0,0,0.65))' }}
+            className="h-20 sm:h-24 w-auto object-contain mx-auto mb-6"
+          />
+
           {/* Eyebrow */}
           <motion.p
             variants={fadeUp}

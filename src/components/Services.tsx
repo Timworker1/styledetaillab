@@ -74,10 +74,21 @@ export default function Services() {
         </motion.div>
 
         {/* Package cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
           {SERVICE_VARIANTS.map((variant, i) => (
             <PackageCard key={variant.id} variant={variant} index={i} selectedSize={selectedSize} />
           ))}
+        </div>
+
+        {/* Explore full services page */}
+        <div className="flex justify-center mb-16">
+          <Link
+            to="/services"
+            className="btn-neon group inline-flex items-center gap-2.5 px-8 py-4 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-base"
+          >
+            See All Services In Detail
+            <ArrowRight size={17} className="transition-transform duration-200 group-hover:translate-x-1" />
+          </Link>
         </div>
 
         {/* Divider */}
@@ -204,10 +215,10 @@ function PackageCard({ variant, index, selectedSize }: { variant: typeof SERVICE
           </a>
           <Link
             to="/services"
-            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg font-body text-sm text-text-muted hover:text-accent transition-colors duration-200"
+            className="group/vd flex items-center justify-center gap-2 w-full py-2.5 rounded-lg border border-accent/40 hover:border-accent bg-accent/5 hover:bg-accent/10 text-accent font-body font-semibold text-sm transition-all duration-200"
           >
-            View Details
-            <ArrowRight size={13} />
+            View Full Details
+            <ArrowRight size={14} className="transition-transform duration-200 group-hover/vd:translate-x-0.5" />
           </Link>
         </div>
       </div>

@@ -39,7 +39,7 @@ export default function Header() {
     setTimeout(() => {
       const el = document.getElementById(id)
       if (!el) return
-      const headerOffset = window.innerWidth >= 1024 ? 112 : 96
+      const headerOffset = window.innerWidth >= 1024 ? 88 : 72
       const top = el.getBoundingClientRect().top + window.scrollY - headerOffset - 8
       window.scrollTo({ top, behavior: 'smooth' })
     }, 60)
@@ -55,14 +55,14 @@ export default function Header() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-24 lg:h-28">
+          <div className="flex items-center justify-between h-16 lg:h-20">
 
             {/* Logo */}
             <a href="/" onClick={(e) => { e.preventDefault(); if (document.getElementById('services')) window.scrollTo({ top: 0, behavior: 'smooth' }); else navigate('/') }} className="flex-shrink-0">
               <img
                 src={`${base}gallery/logotip.png`}
                 alt="StyleDetailLab — Vehicle Protection"
-                className="h-20 lg:h-24 w-auto object-contain"
+                className="h-12 lg:h-14 w-auto object-contain"
               />
             </a>
 

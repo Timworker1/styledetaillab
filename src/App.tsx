@@ -28,7 +28,7 @@ function HomePage() {
       const raf = requestAnimationFrame(() => {
         const el = document.getElementById(id)
         if (!el) return
-        const headerOffset = window.innerWidth >= 1024 ? 112 : 96
+        const headerOffset = window.innerWidth >= 1024 ? 88 : 72
         const top = el.getBoundingClientRect().top + window.scrollY - headerOffset - 8
         window.scrollTo({ top, behavior: 'smooth' })
       })
