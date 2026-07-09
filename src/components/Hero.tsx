@@ -77,7 +77,7 @@ export default function Hero() {
           animate="show"
           custom={0}
           style={{ filter: 'drop-shadow(0 2px 14px rgba(0,0,0,0.65))' }}
-          className="h-28 sm:h-36 w-auto object-contain mx-auto mb-6"
+          className="h-32 sm:h-40 w-auto object-contain mx-auto mb-6"
         />
 
         {/* Eyebrow */}

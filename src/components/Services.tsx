@@ -274,13 +274,16 @@ function ConsultationCard() {
       className="flex flex-col sm:flex-row items-center justify-between gap-6 p-6 rounded-2xl border border-border bg-bg-panel"
     >
       <div>
-        <p className="font-body text-xs uppercase tracking-widest text-accent mb-2">Premium</p>
+        <p className="font-body text-xs uppercase tracking-widest text-accent mb-2">Premium Protection</p>
         <h3 className="font-heading font-black uppercase tracking-heading text-xl text-text-primary mb-1">
-          PPF & Paint Correction
+          Ceramic Coating &amp; Paint Protection
         </h3>
         <p className="font-body text-sm text-text-muted max-w-md">
-          Multi-stage paint correction and paint protection film pricing depends on
-          your vehicle's condition and size — assessed individually.
+          Professional ceramic coatings — from 6-month sealants to long-life protection
+          lasting 1, 3 or 5 years — plus PPF and multi-stage paint correction. Best applied
+          before winter to shield your paint from salt, grit and the elements, with a spring
+          refresh to keep it flawless. Priced individually by your car, its condition and the
+          protection you choose.
         </p>
       </div>
       <a

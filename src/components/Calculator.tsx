@@ -275,9 +275,9 @@ export default function Calculator() {
             <div className="bg-bg-panel border border-border rounded-2xl p-5 flex items-center justify-between gap-4">
               <div>
                 <p className="font-body text-sm font-semibold text-text-primary mb-1">
-                  PPF / Paint Correction
+                  Ceramic Coating, PPF &amp; Paint Correction
                 </p>
-                <p className="font-body text-xs text-text-muted">Priced by consultation — depends on vehicle condition</p>
+                <p className="font-body text-xs text-text-muted">Priced by consultation — protection level, vehicle &amp; condition</p>
               </div>
               <a
                 href="#contact"

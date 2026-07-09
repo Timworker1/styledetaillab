@@ -27,8 +27,8 @@ const SERVICE_META: Record<string, ServiceMeta> = {
     photoCar: 'BMW 3 Series - Exterior Detail',
     badge: 'Most Requested',
     headline: 'Beyond a wash. A proper detail.',
-    description: `A standard car wash cleans the surface - we go deeper. We begin with a snow foam prewash on the lower panels, wheels and arches to lift heavy soiling safely before any contact with the paint. Every panel is then hand-washed using the two-bucket method, rinsed and dried with microfibre towels to leave zero water spots. Chemical decontamination follows - removing bonded iron fallout and tar that a normal wash can't touch. Wheels, arches, glass, trim and all exterior details are cleaned and dressed. We finish with a protective coating applied to the paintwork, leaving your car cleaner for longer and easier to maintain.`,
-    perfectFor: ['Pre-event prep', 'Maintenance detail', 'Recently purchased car', 'Post-winter refresh'],
+    description: `A standard car wash cleans the surface - we go deeper. We begin with a snow foam prewash on the lower panels, wheels and arches to lift heavy soiling safely before any contact with the paint. Every panel is then hand-washed using the two-bucket method, rinsed and dried with microfibre towels to leave zero water spots. Chemical decontamination follows - removing bonded iron fallout and tar that a normal wash can't touch. Wheels, arches, glass, trim and all exterior details are cleaned and dressed. We finish with a protective coating on the paintwork that locks in a deep, glossy shine and shields it from rain, dirt and the elements — so your car keeps that just-detailed, cared-for look for far longer.`,
+    perfectFor: ['Before-winter protection', 'Spring refresh', 'Just bought a car', 'Keeping it showroom-fresh'],
   },
   interior: {
     photo: `${base}gallery/service-interior.webp`,
@@ -37,7 +37,7 @@ const SERVICE_META: Record<string, ServiceMeta> = {
     badge: 'Most Transformative',
     headline: 'Your interior, completely refreshed.',
     description: `The inside of your car gets used every day - and it shows in ways a quick wipe-down can't fix. We vacuum every surface thoroughly, then steam clean the dashboard, vents, door cards, cup holders and pedals using professional equipment that sanitises as it cleans. Leather is treated and conditioned; fabric is deep-cleaned and extracted. Seat belts are fully extended and cleaned, the headlining is carefully refreshed, and all interior glass is polished streak-free. Every plastic and trim surface is dressed and UV-protected. We finish with a professional ozone sanitisation treatment - a hospital-grade process that penetrates every vent, fabric and hidden crevice to destroy bacteria, mould spores and the germs that cause odours. It doesn't mask smells, it eliminates them at the source, leaving a cabin that isn't just clean but genuinely hygienic and healthier to breathe in - especially important for families, children and anyone with allergies.`,
-    perfectFor: ['Families & pets', 'Smoke odour removal', 'Post-winter interior', 'Pre-sale preparation'],
+    perfectFor: ['Families & pets', 'Odour removal', 'Spring deep clean', 'Before selling'],
   },
   complete: {
     photo: `${base}gallery/service-complete.webp`,
@@ -46,7 +46,7 @@ const SERVICE_META: Record<string, ServiceMeta> = {
     badge: 'Best Value',
     headline: 'Every inch. Inside and out.',
     description: `The Complete Detail is for those who want the best result possible - every surface, inside and out, treated in a single visit. We work through the full exterior process: snow foam prewash, two-bucket hand wash, blow dry, chemical decontamination, wheel and arch cleaning, glass polishing and a protective paint finish. Then we move inside: full vacuum, professional steam clean, leather or fabric treatment, seat belts, headlining, interior glass and all trim dressed and protected. We close with a professional ozone sanitisation treatment that reaches deep into vents, fabrics and every crevice - killing bacteria, mould and odour-causing germs to leave the cabin not just fresh, but genuinely hygienic and healthier to breathe in. The result is a car that looks, feels and smells like it just left the showroom.`,
-    perfectFor: ['Pre-sale preparation', 'Spring full refresh', 'Special occasions', 'Best overall result'],
+    perfectFor: ['Full seasonal refresh', 'Before or after winter', 'Special occasions', 'The best all-round result'],
   },
 }
 
