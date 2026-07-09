@@ -84,10 +84,10 @@ export default function Services() {
         <div className="flex justify-center mb-16">
           <Link
             to="/services"
-            className="btn-neon group inline-flex items-center gap-2.5 px-8 py-4 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-base"
+            className="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-lg border border-border hover:border-accent text-text-secondary hover:text-accent font-body font-semibold text-sm transition-colors duration-200"
           >
             See All Services In Detail
-            <ArrowRight size={17} className="transition-transform duration-200 group-hover:translate-x-1" />
+            <ArrowRight size={16} className="transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
 
@@ -204,21 +204,17 @@ function PackageCard({ variant, index, selectedSize }: { variant: typeof SERVICE
           <a
             href="#calculator"
             onClick={(e) => { e.preventDefault(); document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' }) }}
-            className={`flex items-center justify-center gap-2 w-full py-3 rounded-lg font-body font-semibold text-sm transition-colors duration-200
-              ${isComplete
-                ? 'bg-accent hover:bg-accent-dark text-white'
-                : 'border border-border hover:border-accent text-text-muted hover:text-text-primary'
-              }`}
+            className="btn-neon group/cp flex items-center justify-center gap-2 w-full py-3 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm transition-colors duration-200"
           >
             Configure & Price
-            <ArrowRight size={14} />
+            <ArrowRight size={14} className="transition-transform duration-200 group-hover/cp:translate-x-0.5" />
           </a>
           <Link
             to="/services"
-            className="group/vd flex items-center justify-center gap-2 w-full py-2.5 rounded-lg border border-accent/40 hover:border-accent bg-accent/5 hover:bg-accent/10 text-accent font-body font-semibold text-sm transition-all duration-200"
+            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg font-body text-sm text-text-muted hover:text-accent transition-colors duration-200"
           >
             View Full Details
-            <ArrowRight size={14} className="transition-transform duration-200 group-hover/vd:translate-x-0.5" />
+            <ArrowRight size={13} />
           </Link>
         </div>
       </div>
