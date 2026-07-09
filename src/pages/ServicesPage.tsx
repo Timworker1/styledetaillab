@@ -28,7 +28,7 @@ const SERVICE_META: Record<string, ServiceMeta> = {
     badge: 'Most Requested',
     headline: 'Beyond a wash. A proper detail.',
     description: `A standard car wash cleans the surface - we go deeper. We begin with a snow foam prewash on the lower panels, wheels and arches to lift heavy soiling safely before any contact with the paint. Every panel is then hand-washed using the two-bucket method, rinsed and dried with microfibre towels to leave zero water spots. Chemical decontamination follows - removing bonded iron fallout and tar that a normal wash can't touch. Wheels, arches, glass, trim and all exterior details are cleaned and dressed. We finish with a protective coating on the paintwork that locks in a deep, glossy shine and shields it from rain, dirt and the elements — so your car keeps that just-detailed, cared-for look for far longer.`,
-    perfectFor: ['Before-winter protection', 'Spring refresh', 'Just bought a car', 'Keeping it showroom-fresh'],
+    perfectFor: ['Pre-sale preparation', 'Before-winter protection', 'Spring refresh', 'Just bought a car'],
   },
   interior: {
     photo: `${base}gallery/service-interior.webp`,

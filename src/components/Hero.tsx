@@ -19,7 +19,25 @@ export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
-    videoRef.current?.play().catch(() => {})
+    const v = videoRef.current
+    if (!v) return
+    v.play().catch(() => {})
+    // Some mobile browsers block autoplay until the first interaction —
+    // retry play on the first touch/click/scroll, then stop listening.
+    const kick = () => {
+      v.play().catch(() => {})
+      window.removeEventListener('touchstart', kick)
+      window.removeEventListener('click', kick)
+      window.removeEventListener('scroll', kick)
+    }
+    window.addEventListener('touchstart', kick, { passive: true, once: true })
+    window.addEventListener('click', kick, { once: true })
+    window.addEventListener('scroll', kick, { passive: true, once: true })
+    return () => {
+      window.removeEventListener('touchstart', kick)
+      window.removeEventListener('click', kick)
+      window.removeEventListener('scroll', kick)
+    }
   }, [])
 
   const { scrollYProgress } = useScroll({
@@ -41,7 +59,7 @@ export default function Hero() {
       <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 scale-105">
         <video
           ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
           autoPlay
           muted
           loop

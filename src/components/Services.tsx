@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
-import { Check, ArrowRight, Clock } from 'lucide-react'
+import { Check, ArrowRight, Clock, Sparkles, ShieldCheck, Layers } from 'lucide-react'
 import { SERVICE_VARIANTS, ADD_ONS, VEHICLE_SIZES } from '../config/pricing'
 
 const PACKAGE_HIGHLIGHTS: Record<string, { icon: string; tagline: string }> = {
@@ -261,6 +261,24 @@ function AddOnsGrid() {
   )
 }
 
+const PROTECTION = [
+  {
+    icon: Sparkles,
+    title: 'Paint Correction',
+    body: 'Machine polishing that removes swirl marks, light scratches and haze — restoring deep gloss and clarity to your paint.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Ceramic Coating',
+    body: 'A durable liquid-glass layer bonded to the paint. Long-lasting protection, easier washing and a permanent wet-look shine — from 6 months up to 5 years.',
+  },
+  {
+    icon: Layers,
+    title: 'Paint Protection Film (PPF)',
+    body: 'A clear, self-healing film that physically shields high-impact areas from stone chips, scratches and road debris.',
+  },
+]
+
 function ConsultationCard() {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-40px' })
@@ -271,29 +289,44 @@ function ConsultationCard() {
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="flex flex-col sm:flex-row items-center justify-between gap-6 p-6 rounded-2xl border border-border bg-bg-panel"
+      className="p-6 sm:p-8 rounded-2xl border border-border bg-bg-panel"
     >
-      <div>
-        <p className="font-body text-xs uppercase tracking-widest text-accent mb-2">Premium Protection</p>
-        <h3 className="font-heading font-black uppercase tracking-heading text-xl text-text-primary mb-1">
-          Ceramic Coating &amp; Paint Protection
-        </h3>
-        <p className="font-body text-sm text-text-muted max-w-md">
-          Professional ceramic coatings — from 6-month sealants to long-life protection
-          lasting 1, 3 or 5 years — plus PPF and multi-stage paint correction. Best applied
-          before winter to shield your paint from salt, grit and the elements, with a spring
-          refresh to keep it flawless. Priced individually by your car, its condition and the
-          protection you choose.
-        </p>
+      {/* Header + CTA */}
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-7">
+        <div>
+          <p className="font-body text-xs uppercase tracking-widest text-accent mb-2">Premium Protection</p>
+          <h3 className="font-heading font-black uppercase tracking-heading text-xl sm:text-2xl text-text-primary">
+            Ceramic, PPF &amp; Paint Correction
+          </h3>
+        </div>
+        <a
+          href="#contact"
+          onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) }}
+          className="flex-shrink-0 flex items-center gap-2 px-6 py-3 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm transition-colors duration-200 whitespace-nowrap"
+        >
+          Get a Consultation
+          <ArrowRight size={14} />
+        </a>
       </div>
-      <a
-        href="#contact"
-        onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) }}
-        className="flex-shrink-0 flex items-center gap-2 px-6 py-3 rounded-lg border border-border hover:border-accent text-text-primary font-body font-semibold text-sm transition-colors duration-200 whitespace-nowrap"
-      >
-        Get a Consultation
-        <ArrowRight size={14} />
-      </a>
+
+      {/* What each one does */}
+      <div className="grid sm:grid-cols-3 gap-4 mb-6">
+        {PROTECTION.map(({ icon: Icon, title, body }) => (
+          <div key={title} className="p-4 rounded-xl border border-border bg-bg-base">
+            <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center mb-3">
+              <Icon size={16} className="text-accent" />
+            </div>
+            <p className="font-body font-semibold text-text-primary text-sm mb-1.5">{title}</p>
+            <p className="font-body text-xs text-text-muted leading-relaxed">{body}</p>
+          </div>
+        ))}
+      </div>
+
+      <p className="font-body text-xs text-text-muted leading-relaxed">
+        Priced individually by your car, its condition and the protection you choose — from
+        6-month sealants to 5-year ceramic coatings. Best applied before winter to shield the
+        paint from salt, grit and the elements, with a spring refresh to keep it flawless.
+      </p>
     </motion.div>
   )
 }
