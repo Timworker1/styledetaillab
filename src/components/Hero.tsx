@@ -16,23 +16,22 @@ const fadeUp = {
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
-    const v = videoRef.current
-    if (!v) return
-    v.play().catch(() => {})
+    const play = () => document.querySelectorAll<HTMLVideoElement>('.hero-video')
+      .forEach((v) => v.play().catch(() => {}))
+    play()
     // Some mobile browsers block autoplay until the first interaction —
     // retry play on the first touch/click/scroll, then stop listening.
     const kick = () => {
-      v.play().catch(() => {})
+      play()
       window.removeEventListener('touchstart', kick)
       window.removeEventListener('click', kick)
       window.removeEventListener('scroll', kick)
     }
-    window.addEventListener('touchstart', kick, { passive: true, once: true })
-    window.addEventListener('click', kick, { once: true })
-    window.addEventListener('scroll', kick, { passive: true, once: true })
+    window.addEventListener('touchstart', kick, { passive: true })
+    window.addEventListener('click', kick)
+    window.addEventListener('scroll', kick, { passive: true })
     return () => {
       window.removeEventListener('touchstart', kick)
       window.removeEventListener('click', kick)
@@ -53,13 +52,12 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-start sm:justify-center overflow-hidden"
     >
-      {/* ── Background video ────────────────────────────────────────────── */}
-      <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 scale-105">
+      {/* ── Background video (desktop / tablet) ─────────────────────────── */}
+      <motion.div style={{ y: bgY }} className="hidden sm:block absolute inset-0 z-0 scale-105">
         <video
-          ref={videoRef}
-          className="absolute inset-0 w-full h-full object-contain sm:object-cover"
+          className="hero-video absolute inset-0 w-full h-full object-cover"
           autoPlay
           muted
           loop
@@ -128,6 +126,26 @@ export default function Hero() {
             </div>
           ))}
         </h1>
+
+        {/* Mobile-only video — sits right under the slogan */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="show"
+          custom={0.5}
+          className="sm:hidden mb-8 rounded-xl overflow-hidden border border-border bg-bg-panel shadow-lg"
+        >
+          <video
+            className="hero-video w-full aspect-video object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster={`${base}gallery/hero-audi-poster.jpg`}
+            src={`${base}gallery/hero-audi.mp4`}
+          />
+        </motion.div>
 
         {/* Sub-heading */}
         <motion.p
