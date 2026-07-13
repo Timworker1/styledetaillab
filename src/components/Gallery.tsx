@@ -210,6 +210,62 @@ function VideoPairCard({ pair, index, inView }: { pair: VideoPair; index: number
   )
 }
 
+/** Featured paint-correction clip — before/after started in sync. */
+function BlueSpotlight({ inView }: { inView: boolean }) {
+  const beforeRef = useRef<HTMLVideoElement>(null)
+  const afterRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const vids = [beforeRef.current, afterRef.current].filter(Boolean) as HTMLVideoElement[]
+    if (!vids.length) return
+    const syncPlay = () => vids.forEach((v) => { v.currentTime = 0; v.play().catch(() => {}) })
+    const io = new IntersectionObserver(
+      ([entry]) => { entry.isIntersecting ? syncPlay() : vids.forEach((v) => v.pause()) },
+      { threshold: 0.35 }
+    )
+    io.observe(vids[0])
+    return () => io.disconnect()
+  }, [])
+
+  const Tile = ({ vref, kind }: { vref: React.RefObject<HTMLVideoElement>; kind: 'BEFORE' | 'AFTER' }) => (
+    <div className="relative overflow-hidden rounded-xl border border-border bg-bg-base" style={{ aspectRatio: '9/16' }}>
+      <video
+        ref={vref}
+        src={`${base}gallery/${kind === 'BEFORE' ? 'blue-before' : 'blue-after'}.mp4`}
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(10,10,11,0.55) 0%, transparent 38%)' }} />
+      <span className={`absolute top-2 left-2 font-heading font-black text-[10px] tracking-widest px-2 py-0.5 rounded-full ${
+        kind === 'AFTER' ? 'bg-accent text-white' : 'bg-bg-base/80 border border-border text-text-muted'
+      }`}>
+        {kind}
+      </span>
+      {kind === 'AFTER' && <div className="absolute inset-0 rounded-xl ring-1 ring-accent/25 pointer-events-none" />}
+    </div>
+  )
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="max-w-xl mx-auto mb-5 rounded-2xl border border-accent/25 bg-bg-base/40 p-3 sm:p-4"
+    >
+      <p className="font-body text-xs font-semibold uppercase tracking-widest text-accent text-center mb-3">
+        Paint Correction — Before / After
+      </p>
+      <div className="grid grid-cols-2 gap-3">
+        <Tile vref={beforeRef} kind="BEFORE" />
+        <Tile vref={afterRef} kind="AFTER" />
+      </div>
+    </motion.div>
+  )
+}
+
 export default function Gallery() {
   const ref    = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
@@ -254,6 +310,9 @@ export default function Gallery() {
           <span className="font-body text-xs uppercase tracking-widest text-text-muted">Before / After — on video</span>
           <div className="flex-1 h-px bg-border" />
         </div>
+
+        {/* Paint correction spotlight (blue car, synced before/after) */}
+        <BlueSpotlight inView={inView} />
 
         {/* Video before/after pairs */}
         <div className="grid sm:grid-cols-2 gap-4">
