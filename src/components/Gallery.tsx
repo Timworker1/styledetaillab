@@ -210,67 +210,9 @@ function VideoPairCard({ pair, index, inView }: { pair: VideoPair; index: number
   )
 }
 
-/** Featured paint-correction clip — before/after started in sync. */
+/** Featured paint-correction before/after — same looping behaviour as the
+ *  other video pairs (both clips trimmed to equal length so loops stay aligned). */
 function BlueSpotlight({ inView }: { inView: boolean }) {
-  const beforeRef = useRef<HTMLVideoElement>(null)
-  const afterRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    const before = beforeRef.current
-    const after = afterRef.current
-    if (!before || !after) return
-
-    // Restart BOTH from 0 together — keeps them in sync every cycle.
-    const restart = () => {
-      before.currentTime = 0
-      after.currentTime = 0
-      before.play().catch(() => {})
-      after.play().catch(() => {})
-    }
-    // 'before' is the longer clip → it drives the loop. 'after' finishes
-    // early and holds its last frame (the result) until both restart.
-    before.addEventListener('ended', restart)
-
-    const io = new IntersectionObserver(
-      ([entry]) => { entry.isIntersecting ? restart() : (before.pause(), after.pause()) },
-      { threshold: 0.3 }
-    )
-    io.observe(before)
-
-    // Mobile autoplay fallback: kick off on the first interaction.
-    const kick = () => { restart(); window.removeEventListener('touchstart', kick); window.removeEventListener('click', kick) }
-    window.addEventListener('touchstart', kick, { passive: true })
-    window.addEventListener('click', kick)
-
-    return () => {
-      before.removeEventListener('ended', restart)
-      io.disconnect()
-      window.removeEventListener('touchstart', kick)
-      window.removeEventListener('click', kick)
-    }
-  }, [])
-
-  const Tile = ({ vref, kind }: { vref: React.RefObject<HTMLVideoElement>; kind: 'BEFORE' | 'AFTER' }) => (
-    <div className="relative overflow-hidden rounded-xl border border-border bg-bg-base" style={{ aspectRatio: '9/16' }}>
-      <video
-        ref={vref}
-        src={`${base}gallery/${kind === 'BEFORE' ? 'blue-before' : 'blue-after'}.mp4`}
-        autoPlay
-        muted
-        playsInline
-        preload="auto"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-      <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(10,10,11,0.55) 0%, transparent 38%)' }} />
-      <span className={`absolute top-2 left-2 font-heading font-black text-[10px] tracking-widest px-2 py-0.5 rounded-full ${
-        kind === 'AFTER' ? 'bg-accent text-white' : 'bg-bg-base/80 border border-border text-text-muted'
-      }`}>
-        {kind}
-      </span>
-      {kind === 'AFTER' && <div className="absolute inset-0 rounded-xl ring-1 ring-accent/25 pointer-events-none" />}
-    </div>
-  )
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 28 }}
@@ -282,8 +224,8 @@ function BlueSpotlight({ inView }: { inView: boolean }) {
         Paint Correction — Before / After
       </p>
       <div className="grid grid-cols-2 gap-3">
-        <Tile vref={beforeRef} kind="BEFORE" />
-        <Tile vref={afterRef} kind="AFTER" />
+        <VideoTile src={`${base}gallery/blue-before.mp4`} kind="BEFORE" />
+        <VideoTile src={`${base}gallery/blue-after.mp4`} kind="AFTER" />
       </div>
     </motion.div>
   )

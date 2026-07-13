@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — Style Detail Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;900&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0A0A0B;
+      --panel: #141416;
+      --border: #232327;
+      --accent: #1FA37A;
+      --text: #F2F2F3;
+      --muted: #7A7A82;
+      --secondary: #B8B8C0;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      padding: 0;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      text-decoration: none;
+    }
+    .logo-name {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+    .logo-name span { color: var(--accent); }
+    .logo-sub {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      font-weight: 600;
+      text-align: center;
+      margin-top: 2px;
+    }
+    .back {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .back:hover { color: var(--text); border-color: var(--accent); }
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(32px, 5vw, 48px);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h2 {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      margin-top: 48px;
+      margin-bottom: 14px;
+      padding-left: 14px;
+      border-left: 2px solid var(--accent);
+    }
+    p { color: var(--secondary); margin-bottom: 14px; }
+    ul {
+      color: var(--secondary);
+      padding-left: 20px;
+      margin-bottom: 14px;
+    }
+    ul li { margin-bottom: 6px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    strong { color: var(--text); font-weight: 600; }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 32px;
+    }
+    .card p { margin-bottom: 6px; }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="./" style="display:inline-block; text-decoration:none;">
+    <img src="./gallery/logotip.png" alt="Style Detail Lab" style="height:64px; width:auto; object-fit:contain; display:block;" />
+  </a>
+  <a href="./" class="back">← Back to site</a>
+</header>
+
+<main>
+  <span class="badge">Legal</span>
+  <h1>Terms of Service</h1>
+  <p class="meta">Last updated: 14 July 2026</p>
+
+  <p>These Terms of Service ("Terms") govern the detailing services provided by <strong>Style Detail Lab</strong> ("we", "us", "our") to you ("the customer"). By booking a service with us you agree to these Terms.</p>
+
+  <h2>1. Our Services</h2>
+  <p>We provide mobile car detailing at a location of your choosing within our service area in and around Dublin. Services include exterior detailing, interior detailing, complete details, and premium options such as ceramic coating, paint protection film (PPF) and paint correction, quoted individually.</p>
+
+  <h2>2. Booking &amp; Access</h2>
+  <ul>
+    <li>Bookings are confirmed once we agree a date, time and location with you.</li>
+    <li>You must provide safe, legal access to the vehicle and enough space to work around it (a driveway, car park or similar).</li>
+    <li>We bring our own water and power; you do not need to provide anything unless agreed otherwise.</li>
+  </ul>
+
+  <h2>3. Pricing &amp; Payment</h2>
+  <ul>
+    <li>Prices shown in our online calculator are estimates. The final price is confirmed after we inspect the vehicle, as condition and size affect the work required.</li>
+    <li>Premium services (ceramic coating, PPF, paint correction) are quoted individually by consultation.</li>
+    <li>Payment is due on completion, unless otherwise agreed. We accept cash, card or bank transfer.</li>
+  </ul>
+
+  <h2>4. Cancellations &amp; Rescheduling</h2>
+  <ul>
+    <li>Please give us at least <strong>24 hours' notice</strong> to cancel or reschedule.</li>
+    <li>We may need to reschedule due to severe weather or circumstances beyond our control; we will always offer you the earliest alternative slot.</li>
+  </ul>
+
+  <h2>5. Vehicle Condition &amp; Pre-Existing Damage</h2>
+  <p>Detailing can reveal existing defects such as scratches, chips, worn trim, faded paint or prior poor repairs. We are not responsible for pre-existing damage or wear. Where possible we will point out any issues we notice before or during the work.</p>
+
+  <h2>6. Results &amp; Workmanship</h2>
+  <p>We take great care and use professional products and methods. Results depend on the vehicle's condition, age and history — some stains, odours, etching or defects may not be fully removable. We will always be honest about the realistic outcome before starting.</p>
+
+  <h2>7. Weather</h2>
+  <p>This is Ireland — our covered setup lets us work in most conditions. In extreme weather we may reschedule for safety and quality. Some services (e.g. ceramic coatings) require suitable conditions to cure and may be rescheduled accordingly.</p>
+
+  <h2>8. Liability</h2>
+  <p>We are fully insured and treat every vehicle with care. To the extent permitted by law, our liability is limited to the value of the service provided. We are not liable for indirect or consequential loss, or for pre-existing faults. Nothing in these Terms excludes liability that cannot be excluded under Irish law.</p>
+
+  <h2>9. Your Responsibilities</h2>
+  <ul>
+    <li>Remove personal belongings and valuables from the vehicle before we start.</li>
+    <li>Tell us about any sensitive areas, aftermarket parts, wraps or delicate finishes in advance.</li>
+    <li>Ensure the vehicle is legally parked and accessible for the duration of the work.</li>
+  </ul>
+
+  <h2>10. Complaints</h2>
+  <p>If you are not happy with any part of our work, please tell us before we leave or as soon as possible afterwards, and we will do our best to put it right.</p>
+
+  <h2>11. Changes to These Terms</h2>
+  <p>We may update these Terms from time to time. The "Last updated" date above shows when they were last revised.</p>
+
+  <h2>12. Governing Law</h2>
+  <p>These Terms are governed by the laws of Ireland and subject to the jurisdiction of the Irish courts.</p>
+
+  <h2>13. Contact</h2>
+  <div class="card">
+    <p><strong>Style Detail Lab</strong></p>
+    <p>Dublin, Ireland</p>
+    <p>Phone: +353 87 004 4296</p>
+    <p>Email: <a href="mailto:styledetaillab@gmail.com">styledetaillab@gmail.com</a></p>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2026 Style Detail Lab &middot; Dublin, Ireland &middot; <a href="/">Back to homepage</a></p>
+</footer>
+
+</body>
+</html>

@@ -84,9 +84,14 @@ export default function Footer() {
           <p className="font-body text-xs text-text-muted">
             © {year} {SITE_CONFIG.businessName}. All rights reserved.
           </p>
-          <a href={`${base}privacy.html`} className="font-body text-xs text-text-muted hover:text-accent transition-colors">
-            Privacy Policy
-          </a>
+          <div className="flex items-center gap-4">
+            <a href={`${base}privacy.html`} className="font-body text-xs text-text-muted hover:text-accent transition-colors">
+              Privacy Policy
+            </a>
+            <a href={`${base}terms.html`} className="font-body text-xs text-text-muted hover:text-accent transition-colors">
+              Terms of Service
+            </a>
+          </div>
         </div>
       </div>
     </footer>
