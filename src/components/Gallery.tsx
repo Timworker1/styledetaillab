@@ -216,15 +216,38 @@ function BlueSpotlight({ inView }: { inView: boolean }) {
   const afterRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
-    const vids = [beforeRef.current, afterRef.current].filter(Boolean) as HTMLVideoElement[]
-    if (!vids.length) return
-    const syncPlay = () => vids.forEach((v) => { v.currentTime = 0; v.play().catch(() => {}) })
+    const before = beforeRef.current
+    const after = afterRef.current
+    if (!before || !after) return
+
+    // Restart BOTH from 0 together — keeps them in sync every cycle.
+    const restart = () => {
+      before.currentTime = 0
+      after.currentTime = 0
+      before.play().catch(() => {})
+      after.play().catch(() => {})
+    }
+    // 'before' is the longer clip → it drives the loop. 'after' finishes
+    // early and holds its last frame (the result) until both restart.
+    before.addEventListener('ended', restart)
+
     const io = new IntersectionObserver(
-      ([entry]) => { entry.isIntersecting ? syncPlay() : vids.forEach((v) => v.pause()) },
-      { threshold: 0.35 }
+      ([entry]) => { entry.isIntersecting ? restart() : (before.pause(), after.pause()) },
+      { threshold: 0.3 }
     )
-    io.observe(vids[0])
-    return () => io.disconnect()
+    io.observe(before)
+
+    // Mobile autoplay fallback: kick off on the first interaction.
+    const kick = () => { restart(); window.removeEventListener('touchstart', kick); window.removeEventListener('click', kick) }
+    window.addEventListener('touchstart', kick, { passive: true })
+    window.addEventListener('click', kick)
+
+    return () => {
+      before.removeEventListener('ended', restart)
+      io.disconnect()
+      window.removeEventListener('touchstart', kick)
+      window.removeEventListener('click', kick)
+    }
   }, [])
 
   const Tile = ({ vref, kind }: { vref: React.RefObject<HTMLVideoElement>; kind: 'BEFORE' | 'AFTER' }) => (
@@ -233,9 +256,8 @@ function BlueSpotlight({ inView }: { inView: boolean }) {
         ref={vref}
         src={`${base}gallery/${kind === 'BEFORE' ? 'blue-before' : 'blue-after'}.mp4`}
         muted
-        loop
         playsInline
-        preload="metadata"
+        preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(10,10,11,0.55) 0%, transparent 38%)' }} />
