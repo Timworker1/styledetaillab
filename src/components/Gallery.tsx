@@ -255,6 +255,7 @@ function BlueSpotlight({ inView }: { inView: boolean }) {
       <video
         ref={vref}
         src={`${base}gallery/${kind === 'BEFORE' ? 'blue-before' : 'blue-after'}.mp4`}
+        autoPlay
         muted
         playsInline
         preload="auto"
