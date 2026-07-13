@@ -3,7 +3,7 @@
 
 export const SITE_CONFIG = {
   // ─── Business identity ───────────────────────────────────────────────────
-  businessName: 'TODO: Business Name',       // e.g. "Dublin Mobile Detailing"
+  businessName: 'Style Detail Lab',
   tagline: 'Premium Mobile Detailing. We Come to You.',
 
   // ─── Contact ────────────────────────────────────────────────────────────
@@ -71,7 +71,7 @@ export const SITE_CONFIG = {
     title: 'Mobile Car Detailing Dublin | We Come to You',
     description:
       'Premium mobile car detailing in Dublin. We bring the studio to your door — fully insured, own water & power. Get an instant estimate.',
-    url: 'https://TODO.ie',                  // TODO: set production domain
+    url: 'https://timworker1.github.io/styledetaillab/',   // update when a custom domain is set
     ogImage: '/og-image.jpg',
   },
 } as const
