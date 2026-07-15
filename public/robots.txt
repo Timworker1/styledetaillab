@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://timworker1.github.io/styledetaillab/sitemap.xml
+Sitemap: https://styledetaillab.ie/sitemap.xml
