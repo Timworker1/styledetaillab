@@ -50,7 +50,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href={`https://wa.me/${SITE_CONFIG.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 font-body text-sm text-text-muted hover:text-text-primary transition-colors">
+                <a href={`https://wa.me/${SITE_CONFIG.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 font-body text-sm text-text-muted hover:text-text-primary transition-colors">
                   <MessageCircle size={13} className="text-accent flex-shrink-0" />
                   WhatsApp
                 </a>

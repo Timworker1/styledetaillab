@@ -175,7 +175,7 @@ export default function Header() {
           Call
         </a>
         <a
-          href={`https://wa.me/${SITE_CONFIG.whatsapp}`}
+          href={`https://wa.me/${SITE_CONFIG.whatsapp.replace(/\D/g, '')}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm transition-colors"

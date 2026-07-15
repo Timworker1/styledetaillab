@@ -24,7 +24,7 @@ export default function FloatingButtons() {
         >
           {/* WhatsApp */}
           <a
-            href={`https://wa.me/${SITE_CONFIG.whatsapp}`}
+            href={`https://wa.me/${SITE_CONFIG.whatsapp.replace(/\D/g, '')}`}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp"
