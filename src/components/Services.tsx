@@ -1,10 +1,8 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
 import { Check, ArrowRight, Clock, Sparkles, ShieldCheck, Layers } from 'lucide-react'
 import { SERVICE_VARIANTS, ADD_ONS, VEHICLE_SIZES } from '../config/pricing'
-
-const base = import.meta.env.BASE_URL
 
 const PACKAGE_HIGHLIGHTS: Record<string, { icon: string; tagline: string }> = {
   exterior: { icon: '✦', tagline: 'Paint, wheels, glass & every detail outside' },
@@ -105,85 +103,8 @@ export default function Services() {
 
         {/* Consultation card */}
         <ConsultationCard />
-
-        {/* Paint protection film / wraps */}
-        <FilmBlock />
       </div>
     </section>
-  )
-}
-
-const FILM_MEDIA = [
-  { type: 'video' as const, src: `${base}gallery/film-1.mp4` },
-  { type: 'video' as const, src: `${base}gallery/film-2.mp4` },
-  { type: 'image' as const, src: `${base}gallery/film-photo.webp` },
-]
-
-function FilmBlock() {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-40px' })
-
-  useEffect(() => {
-    const root = ref.current
-    if (!root) return
-    const vids = Array.from(root.querySelectorAll('video'))
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        const v = e.target as HTMLVideoElement
-        e.isIntersecting ? v.play().catch(() => {}) : v.pause()
-      }),
-      { threshold: 0.4 }
-    )
-    vids.forEach((v) => io.observe(v))
-    return () => io.disconnect()
-  }, [])
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="mt-4 p-6 sm:p-8 rounded-2xl border border-border bg-bg-panel"
-    >
-      <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
-        {/* Copy */}
-        <div>
-          <p className="font-body text-xs uppercase tracking-widest text-accent mb-2">Also Available</p>
-          <h3 className="font-heading font-black uppercase tracking-heading text-xl sm:text-2xl text-text-primary mb-3">
-            Paint Protection Film &amp; Wraps
-          </h3>
-          <p className="font-body text-sm text-text-muted leading-relaxed mb-4">
-            Beyond cleaning — we protect and transform. Self-healing clear film shields your
-            paintwork from stone chips, scratches and road rash, keeping it flawless underneath.
-            Prefer a new look? We also wrap in <span className="text-text-secondary">gloss</span>,{' '}
-            <span className="text-text-secondary">matte</span> or <span className="text-text-secondary">satin</span> finishes —
-            applied by hand, precise and seamless.
-          </p>
-          <a
-            href="#contact"
-            onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) }}
-            className="inline-flex items-center gap-2 font-body text-sm font-semibold text-accent hover:underline"
-          >
-            Ask about film &amp; wraps
-            <ArrowRight size={14} />
-          </a>
-        </div>
-
-        {/* Media */}
-        <div className="grid grid-cols-3 gap-2.5">
-          {FILM_MEDIA.map((m) => (
-            <div key={m.src} className="relative overflow-hidden rounded-xl border border-border bg-bg-base" style={{ aspectRatio: '9/16' }}>
-              {m.type === 'video' ? (
-                <video src={m.src} muted loop playsInline preload="metadata" className="absolute inset-0 w-full h-full object-cover" />
-              ) : (
-                <img src={m.src} alt="Paint protection film application" className="absolute inset-0 w-full h-full object-cover" />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </motion.div>
   )
 }
 

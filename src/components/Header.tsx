@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Phone, Menu, X, MessageCircle } from 'lucide-react'
+import { Phone, Menu, X, MessageCircle, ChevronRight } from 'lucide-react'
 import { SITE_CONFIG } from '../config/site'
 
 const base = import.meta.env.BASE_URL
+const waNumber = SITE_CONFIG.whatsapp.replace(/\D/g, '')
 
 const NAV_LINKS = [
   { label: 'Services', id: 'services' },
@@ -119,24 +120,45 @@ export default function Header() {
               transition={{ duration: 0.2 }}
               className="lg:hidden bg-bg-panel border-t border-border overflow-hidden"
             >
-              <nav className="flex flex-col px-4 py-4 gap-1">
+              <nav className="flex flex-col px-4 py-5">
                 {NAV_LINKS.map((link) => (
                   <a
                     key={link.id}
                     href={`#${link.id}`}
                     onClick={(e) => { e.preventDefault(); closeMenu(); scrollTo(link.id) }}
-                    className="font-body font-medium text-text-muted hover:text-text-primary py-2.5 border-b border-border last:border-0 transition-colors"
+                    className="group flex items-center justify-between font-body font-medium text-text-secondary hover:text-text-primary py-3.5 border-b border-border/60 transition-colors"
                   >
                     {link.label}
+                    <ChevronRight size={16} className="text-text-muted/60 group-hover:text-accent group-hover:translate-x-0.5 transition-all" />
                   </a>
                 ))}
+
                 <a
                   href="#calculator"
                   onClick={(e) => { e.preventDefault(); closeMenu(); scrollTo('calculator') }}
-                  className="mt-3 px-5 py-3 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm text-center transition-colors"
+                  className="btn-neon mt-5 px-5 py-3.5 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm text-center transition-colors"
                 >
                   Get a Quote
                 </a>
+
+                <div className="grid grid-cols-2 gap-3 mt-3">
+                  <a
+                    href={`tel:${SITE_CONFIG.phone}`}
+                    className="flex items-center justify-center gap-2 py-3 rounded-lg border border-border hover:border-accent text-text-primary font-body font-semibold text-sm transition-colors"
+                  >
+                    <Phone size={15} />
+                    Call
+                  </a>
+                  <a
+                    href={`https://wa.me/${waNumber}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 py-3 rounded-lg border border-border hover:border-accent text-text-primary font-body font-semibold text-sm transition-colors"
+                  >
+                    <MessageCircle size={15} />
+                    WhatsApp
+                  </a>
+                </div>
               </nav>
             </motion.div>
           )}

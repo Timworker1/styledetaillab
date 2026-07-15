@@ -67,6 +67,9 @@ export default function ServicesPage() {
           <ServiceSection key={variant.id} variant={variant} index={i} />
         ))}
 
+        {/* Paint protection film & wraps */}
+        <FilmSection />
+
         {/* What to expect */}
         <WhatToExpectCards />
 
@@ -77,6 +80,129 @@ export default function ServicesPage() {
       <Footer />
       <FloatingButtons />
     </div>
+  )
+}
+
+const FILM_MEDIA = [
+  { type: 'video' as const, src: `${base}gallery/film-1.mp4` },
+  { type: 'video' as const, src: `${base}gallery/film-2.mp4` },
+  { type: 'image' as const, src: `${base}gallery/film-photo.webp` },
+]
+
+const FILM_FEATURES = [
+  'Self-healing clear film — shrugs off stone chips, scratches & road rash',
+  'Colour-change wraps — gloss, matte or satin finishes',
+  'Protects resale value & keeps the paint flawless underneath',
+  'Applied by hand — precise edges, seamless finish',
+]
+
+function FilmSection() {
+  const navigate = useNavigate()
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-100px' })
+
+  useEffect(() => {
+    const root = ref.current
+    if (!root) return
+    const vids = Array.from(root.querySelectorAll('video'))
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        const v = e.target as HTMLVideoElement
+        e.isIntersecting ? v.play().catch(() => {}) : v.pause()
+      }),
+      { threshold: 0.4 }
+    )
+    vids.forEach((v) => io.observe(v))
+    return () => io.disconnect()
+  }, [])
+
+  return (
+    <section ref={ref} className="relative py-24 px-4 sm:px-6 lg:px-8 bg-bg-base overflow-hidden">
+      <div className="absolute top-0 inset-x-0 h-px bg-border" />
+      <div className="relative z-10 max-w-6xl mx-auto">
+
+        {/* Label row */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center gap-4 mb-12"
+        >
+          <span className="font-heading font-black text-6xl text-accent/20 leading-none">+</span>
+          <div className="h-px flex-1 bg-border" />
+          <span className="font-body text-xs uppercase tracking-widest text-accent font-semibold px-3 py-1 rounded-full border border-accent/30">
+            Also Available
+          </span>
+        </motion.div>
+
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+          {/* Media */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full lg:w-[48%] flex-shrink-0 grid grid-cols-3 gap-3"
+          >
+            {FILM_MEDIA.map((m) => (
+              <div key={m.src} className="relative overflow-hidden rounded-2xl border border-border bg-bg-panel" style={{ aspectRatio: '9/16' }}>
+                {m.type === 'video' ? (
+                  <video src={m.src} muted loop playsInline preload="metadata" className="absolute inset-0 w-full h-full object-cover" />
+                ) : (
+                  <img src={m.src} alt="Paint protection film application" className="absolute inset-0 w-full h-full object-cover" />
+                )}
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full lg:w-[52%]"
+          >
+            <h2 className="font-heading font-black uppercase tracking-heading text-4xl sm:text-5xl text-text-primary leading-none mb-3">
+              Paint Protection<br />Film &amp; Wraps
+            </h2>
+            <p className="font-body text-accent font-semibold text-base mb-6 italic">
+              "Protect it. Or transform it."
+            </p>
+            <p className="font-body text-text-muted leading-relaxed text-sm mb-8 border-l-2 border-accent/30 pl-5">
+              Detailing keeps your car clean — film keeps it protected. A self-healing clear layer
+              shields the paint from stone chips, scratches and road rash, so it stays flawless
+              underneath. Want a whole new look instead? We also wrap in gloss, matte or satin.
+              Every job is applied by hand for precise, seamless edges.
+            </p>
+
+            <ul className="grid grid-cols-1 gap-2.5 mb-8">
+              {FILM_FEATURES.map((item, i) => (
+                <motion.li
+                  key={item}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={inView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.3 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex items-start gap-3 group/item"
+                >
+                  <div className="w-5 h-5 rounded-full border border-accent/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check size={10} className="text-accent" strokeWidth={2.5} />
+                  </div>
+                  <span className="font-body text-xs text-text-secondary leading-relaxed">{item}</span>
+                </motion.li>
+              ))}
+            </ul>
+
+            <a
+              href="/"
+              onClick={(e) => { e.preventDefault(); navigate('/', { state: { scrollTo: 'contact' } }) }}
+              className="btn-neon inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm"
+            >
+              Ask About Film &amp; Wraps
+              <ArrowRight size={14} />
+            </a>
+          </motion.div>
+        </div>
+      </div>
+    </section>
   )
 }
 
