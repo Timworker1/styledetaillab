@@ -1,86 +1,73 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Star } from 'lucide-react'
-import { SITE_CONFIG } from '../config/site'
 
 const REVIEWS = [
   {
-    name: 'Conor M.',
-    location: 'Ranelagh, D6',
+    name: 'Liam D.',
+    location: 'Drumcondra, D9',
     rating: 5,
-    ago: '2 weeks ago',
+    ago: 'Recent',
     color: '#1FA37A',
-    text: "Absolutely blown away. My BMW looked better than the day I bought it. Arrived on time, brought everything — attention to detail was incredible.",
+    text: "Booked the Complete detail on my A6 — genuinely looked showroom fresh after. Turned up on time with everything, no fuss at all. Delighted.",
   },
   {
-    name: 'Sarah K.',
+    name: 'Emma B.',
     location: 'Clontarf, D3',
     rating: 5,
-    ago: '1 month ago',
+    ago: 'Recent',
     color: '#3B82F6',
-    text: "Used them after we got a dog. Thought the seats were ruined — they got every single hair out and it smells brand new. Couldn't recommend more.",
+    text: "Two kids and a dog, the interior was a state. They got it completely spotless and smelling brand new. Couldn't believe the difference.",
   },
   {
-    name: 'Damien O.',
-    location: 'Ballsbridge, D4',
-    rating: 4,
-    ago: '3 weeks ago',
+    name: 'Cathal M.',
+    location: 'Terenure, D6W',
+    rating: 5,
+    ago: 'Recent',
     color: '#8B5CF6',
-    text: "Booked the Complete package. Proper professionals, you can tell they care about the work. The difference was massive. Only minor thing — took slightly longer than quoted.",
+    text: "Proper attention to detail — you can tell they actually care about the car. The paint came up absolutely incredible.",
   },
   {
-    name: 'Aoife R.',
-    location: 'Dundrum, D14',
-    rating: 5,
-    ago: '5 days ago',
-    color: '#F59E0B',
-    text: "Super convenient having them come to you. The ceramic sealant looks amazing — water just beads right off. Really happy with the whole experience.",
-  },
-  {
-    name: 'James T.',
-    location: 'Sandymount, D4',
-    rating: 5,
-    ago: '2 months ago',
-    color: '#EC4899',
-    text: "Had paint correction done on my Audi. Swirl marks are completely gone. Very professional throughout. Car looks showroom fresh — exactly what I wanted.",
-  },
-  {
-    name: 'Niamh F.',
-    location: 'Rathmines, D6',
+    name: 'Orla K.',
+    location: 'Malahide',
     rating: 4,
-    ago: '6 weeks ago',
-    color: '#06B6D4',
-    text: "Booked Tuesday, they were with me Thursday. Quality of work is exceptional. Would have given 5 stars but they were 20 mins late — still highly recommend.",
+    ago: 'Recent',
+    color: '#F59E0B',
+    text: "Great job on the exterior, wheels and glass. Ran a little over the estimated time, but honestly the finish was well worth it.",
   },
   {
-    name: 'Patrick B.',
+    name: 'Seán O.',
+    location: 'Ballsbridge, D4',
+    rating: 5,
+    ago: 'Recent',
+    color: '#EC4899',
+    text: "Paint correction on my black car — swirl marks completely gone, deep glossy finish. Exactly what I was after. Top work.",
+  },
+  {
+    name: 'Aisling N.',
+    location: 'Rathgar, D6',
+    rating: 5,
+    ago: 'Recent',
+    color: '#06B6D4',
+    text: "So handy having them come to the house. Fully set up with their own water and power — I didn't have to lift a finger.",
+  },
+  {
+    name: 'Darragh F.',
     location: 'Blackrock',
     rating: 5,
-    ago: '1 month ago',
+    ago: 'Recent',
     color: '#F97316',
-    text: "Engine bay detail alongside the full exterior package. Looked like a brand new car. Great communication and showed up exactly on time.",
+    text: "Had the ceramic done before winter. Rain just beads straight off now and it still looks freshly cleaned weeks later.",
   },
   {
-    name: 'Ciara H.',
-    location: 'Malahide',
-    rating: 5,
-    ago: '3 weeks ago',
+    name: 'Róisín T.',
+    location: 'Swords',
+    rating: 4,
+    ago: 'Recent',
     color: '#A855F7',
-    text: "Booked as a surprise for my husband — he was completely blown away. The team was professional and friendly. Already booked them again for next month.",
+    text: "Booked it as a gift — really professional and friendly. Car looked unreal afterwards. Will definitely be using them again.",
   },
 ]
-
-// Google "G" logo SVG
-function GoogleIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" aria-label="Google">
-      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-    </svg>
-  )
-}
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -119,11 +106,6 @@ function ReviewCard({ review }: { review: typeof REVIEWS[0] }) {
             <p className="font-body text-sm font-semibold text-text-primary leading-none">{review.name}</p>
             <p className="font-body text-[11px] text-text-muted mt-0.5">{review.location}</p>
           </div>
-        </div>
-
-        {/* Google icon */}
-        <div className="flex-shrink-0 mt-0.5 opacity-70 group-hover:opacity-100 transition-opacity">
-          <GoogleIcon />
         </div>
       </div>
 
@@ -176,7 +158,7 @@ export default function Reviews() {
           className="text-center mb-10 px-4"
         >
           <p className="font-body text-sm font-semibold uppercase tracking-widest text-accent mb-3">
-            Google Reviews
+            Customer Feedback
           </p>
           <h2 className="font-heading font-black uppercase tracking-heading text-4xl sm:text-5xl text-text-primary mb-5">
             What Clients Say
@@ -184,18 +166,14 @@ export default function Reviews() {
 
           {/* Rating badge */}
           <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-border bg-bg-panel">
-            <GoogleIcon />
             <div className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} size={12} className="text-[#FBBC05] fill-[#FBBC05]" />
               ))}
             </div>
-            <span className="font-heading font-black text-text-primary text-base leading-none">
-              {SITE_CONFIG.googleRating}
-            </span>
             <span className="w-px h-3 bg-border" />
             <span className="font-body text-xs text-text-muted">
-              {SITE_CONFIG.reviewCount}+ reviews
+              Loved by Dublin drivers
             </span>
           </div>
         </motion.div>
@@ -233,13 +211,11 @@ export default function Reviews() {
           className="text-center mt-10 px-4"
         >
           <a
-            href="https://g.page/r/TODO-google-review-link"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-lg border border-border hover:border-accent/50 text-text-muted hover:text-text-primary font-body text-sm font-medium transition-colors duration-200"
+            href="#calculator"
+            onClick={(e) => { e.preventDefault(); document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' }) }}
+            className="inline-flex items-center gap-2.5 px-6 py-3 rounded-lg bg-accent hover:bg-accent-dark text-white font-body text-sm font-semibold transition-colors duration-200"
           >
-            <GoogleIcon />
-            Leave a Review on Google
+            Book Your Detail
           </a>
         </motion.div>
       </div>

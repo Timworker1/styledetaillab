@@ -12,8 +12,8 @@ interface Stat {
 
 const STATS: Stat[] = [
   { value: parseInt(SITE_CONFIG.carsDetailed), suffix: '+', label: 'Cars Detailed' },
-  { value: parseFloat(SITE_CONFIG.googleRating), suffix: '', label: 'Google Rating', decimals: 1 },
-  { value: parseInt(SITE_CONFIG.reviewCount), suffix: '+', label: '5★ Reviews' },
+  { value: SITE_CONFIG.areas.length, suffix: '+', label: 'Areas Covered' },
+  { value: 0, suffix: '', label: 'Call-out Fee' },
   { value: 100, suffix: '%', label: 'Mobile Service' },
 ]
 

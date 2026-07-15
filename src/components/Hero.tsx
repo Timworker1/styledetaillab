@@ -1,7 +1,6 @@
 import { useRef, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Star, Shield, Droplets } from 'lucide-react'
-import { SITE_CONFIG } from '../config/site'
 
 const base = import.meta.env.BASE_URL
 
@@ -191,7 +190,7 @@ export default function Hero() {
           custom={0.7}
           className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3"
         >
-          <TrustBadge icon={<StarRow />} label={`Google ${SITE_CONFIG.googleRating} ★`} />
+          <TrustBadge icon={<StarRow />} label="5★ Service" />
           <Divider />
           <TrustBadge icon={<Shield size={15} className="text-accent" />} label="Fully Insured" />
           <Divider />

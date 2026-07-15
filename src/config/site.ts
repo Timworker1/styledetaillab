@@ -25,7 +25,7 @@ export const SITE_CONFIG = {
   // ─── Reviews / trust ────────────────────────────────────────────────────
   googleRating: '5.0',     // TODO: replace with real Google rating
   reviewCount: '47',       // TODO: replace with real review count
-  carsDetailed: '200+',    // TODO: update counter
+  carsDetailed: '500+',    // cars detailed to date
   yearsActive: '3',        // TODO: update
 
   // ─── Eircode routing keys covered ───────────────────────────────────────
