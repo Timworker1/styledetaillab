@@ -28,12 +28,12 @@ function BeforeAfterSlider() {
   }
 
   const variants = {
-    enter: (dir: number) => ({ rotateY: dir > 0 ? 90 : -90, scale: 0.3, opacity: 0, z: -600 }),
-    center: { rotateY: 0, scale: 1, opacity: 1, z: 0 },
-    exit: (dir: number) => ({ rotateY: dir > 0 ? -90 : 90, scale: 0.3, opacity: 0, z: -600 }),
+    enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 30 : -30 }),
+    center: { opacity: 1, x: 0 },
+    exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -30 : 30 }),
   }
 
-  const springTransition = { type: 'spring' as const, stiffness: 220, damping: 26, mass: 0.9 }
+  const springTransition = { duration: 0.28, ease: [0.22, 1, 0.36, 1] as const }
 
   return (
     <motion.div
