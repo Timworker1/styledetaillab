@@ -38,20 +38,23 @@ export default function ContactForm() {
   const set = (field: keyof FormState, value: string | boolean) =>
     setForm((f) => ({ ...f, [field]: value }))
 
-  const summaryLines = () => [
-    selection && `Selected: ${selection}`,
-    `Name: ${form.name}`,
-    `Phone / Email: ${form.phone}`,
-    form.eircode && `Eircode: ${form.eircode}`,
-    form.vehicle && `Vehicle: ${form.vehicle}`,
-    form.date && `Preferred date: ${form.date}`,
-    form.message && `Message: ${form.message}`,
-  ].filter(Boolean) as string[]
-
-  // Ready-to-send WhatsApp message from the form + calculator selection.
+  // A warm, natural first message — reads like a real person starting a chat.
   const buildWhatsAppUrl = () => {
-    const text = ['New booking enquiry — Style Detail Lab', ...summaryLines()].join('\n')
-    return `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`
+    const l: string[] = []
+    l.push('Hi Style Detail Lab! 👋')
+    l.push('')
+    l.push(`I'd like to book a car detail${form.name ? ` — my name is ${form.name}` : ''}.`)
+    if (selection) { l.push(''); l.push(`What I'm after: ${selection}.`) }
+    const extras = [
+      form.vehicle && `Car: ${form.vehicle}`,
+      form.eircode && `Area (Eircode): ${form.eircode}`,
+      form.date && `Preferred date: ${form.date}`,
+    ].filter(Boolean)
+    if (extras.length) { l.push(''); l.push(...extras as string[]) }
+    if (form.message) { l.push(''); l.push(form.message) }
+    l.push('')
+    l.push('Could you let me know your next availability? Thanks! 🙌')
+    return `https://wa.me/${waNumber}?text=${encodeURIComponent(l.join('\n'))}`
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -243,6 +246,10 @@ export default function ContactForm() {
                   Call Us
                 </a>
               </div>
+
+              <p className="text-center font-body text-xs text-text-muted pt-1">
+                Takes 20 seconds · No obligation · We usually reply within the hour · Pay only on completion
+              </p>
             </form>
           )}
         </motion.div>
