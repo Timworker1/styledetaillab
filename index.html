@@ -2,7 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0A0A0B" />
 
@@ -68,6 +70,51 @@
         "opens": "09:00",
         "closes": "21:00"
       }]
+    }
+    </script>
+
+    <!-- FAQ structured data (mirrors the on-page FAQ; enables rich results) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What if it rains?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Rain won't stop us — this is Ireland, after all. We use a covered setup that lets us work in any weather. If conditions are genuinely unsafe (storm-level winds or heavy hail), we'll reschedule at no charge." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you need access to water or power?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Not at all. We bring our own water tank and generator — everything we need is in the van. You don't need to provide anything. Just let us know where to park." }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a detail take?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It depends on the package and vehicle size. An Exterior Detail on a small hatch takes ~3 hours; a Complete Detail on a large SUV can take 7–8 hours. We give you an estimate when you book." }
+        },
+        {
+          "@type": "Question",
+          "name": "What areas of Dublin do you cover?",
+          "acceptedAnswer": { "@type": "Answer", "text": "We cover Dublin city and most surrounding areas. Use the Eircode checker in the Service Area section to confirm, or just message us — we're flexible." }
+        },
+        {
+          "@type": "Question",
+          "name": "What payment options do you accept?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Card (tap or chip), cash, and Revolut. Payment is taken on completion of the job, once you've seen the results." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you come to my workplace or apartment car park?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes — as long as we have room to park the van alongside your vehicle and a safe working area, we're happy to come to offices, apartment car parks, or anywhere else convenient." }
+        },
+        {
+          "@type": "Question",
+          "name": "What's the difference between a valet and a detail?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A valet is a quick wash-and-vacuum. A detail is a thorough, methodical process — paint decontamination, hand-cleaning every panel, deep interior steam clean, paint protection — that genuinely restores your car." }
+        }
+      ]
     }
     </script>
   </head>

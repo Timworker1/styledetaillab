@@ -18,6 +18,7 @@ import Footer from './components/Footer'
 import FloatingButtons from './components/FloatingButtons'
 import Cursor from './components/Cursor'
 import ServicesPage from './pages/ServicesPage'
+import NotFound from './pages/NotFound'
 
 function HomePage() {
   const location = useLocation()
@@ -70,6 +71,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   )
