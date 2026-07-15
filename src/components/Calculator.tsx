@@ -25,9 +25,16 @@ function buildWhatsAppMessage(
   const s = VEHICLE_SIZES.find((x) => x.id === size)!
   const extras = ADD_ONS.filter((a) => addOnIds.includes(a.id))
 
-  let msg = `Hi! I'd like a ${v.label} Detail — ${s.label} (${s.description})`
-  if (extras.length) msg += ` + ${extras.map((e) => e.label).join(', ')}`
-  msg += ` (est. from €${total}). When's your next availability?`
+  const pkg = `${v.label} Detail — ${s.label} vehicle${extras.length ? ' + ' + extras.map((e) => e.label).join(', ') : ''} (est. from €${total})`
+  const msg = [
+    'Hi Style Detail Lab! 👋',
+    '',
+    "I'd like to book a car detail.",
+    '',
+    `What I'm after: ${pkg}.`,
+    '',
+    'Could you let me know your next availability? Thanks! 🙌',
+  ].join('\n')
   return encodeURIComponent(msg)
 }
 
@@ -53,7 +60,7 @@ export default function Calculator() {
       return next
     })
 
-  const whatsappUrl = `https://wa.me/${SITE_CONFIG.whatsapp}?text=${buildWhatsAppMessage(variant, size, [...addOns], total)}`
+  const whatsappUrl = `https://wa.me/${SITE_CONFIG.whatsapp.replace(/\D/g, '')}?text=${buildWhatsAppMessage(variant, size, [...addOns], total)}`
 
   return (
     <section id="calculator" className="py-24 px-4 sm:px-6 lg:px-8 bg-bg-base">

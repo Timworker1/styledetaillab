@@ -20,11 +20,15 @@ const EMPTY: FormState = {
   name: '', phone: '', eircode: '', vehicle: '', date: '', message: '', gdpr: false,
 }
 
+// Weekend-only service → offer day slots, not a full calendar.
+const DAYS = ['This Saturday', 'This Sunday', 'Next weekend', "I'm flexible"]
+
 export default function ContactForm() {
   const headRef = useRef<HTMLDivElement>(null)
   const inView = useInView(headRef, { once: true, margin: '-60px' })
   const [form, setForm] = useState<FormState>(EMPTY)
   const [submitted, setSubmitted] = useState(false)
+  const [showMore, setShowMore] = useState(false)
   // Package chosen in the calculator (carried over so the client barely types).
   const [selection, setSelection] = useState('')
 
@@ -168,44 +172,71 @@ export default function ContactForm() {
                     className={inputCls}
                   />
                 </Field>
-                <Field label="Eircode">
-                  <input
-                    type="text"
-                    value={form.eircode}
-                    onChange={(e) => set('eircode', e.target.value.toUpperCase())}
-                    placeholder="D04 XY12"
-                    maxLength={8}
-                    className={inputCls}
-                  />
-                </Field>
-                <Field label="Your Vehicle">
-                  <input
-                    type="text"
-                    value={form.vehicle}
-                    onChange={(e) => set('vehicle', e.target.value)}
-                    placeholder="e.g. BMW X5 2021"
-                    className={inputCls}
-                  />
-                </Field>
               </div>
-              <Field label="Preferred Date">
-                <input
-                  type="date"
-                  value={form.date}
-                  onChange={(e) => set('date', e.target.value)}
-                  min={new Date().toISOString().split('T')[0]}
-                  className={inputCls}
-                />
+
+              {/* Preferred day — we work weekends */}
+              <Field label="Preferred Day">
+                <div className="flex flex-wrap gap-2">
+                  {DAYS.map((d) => (
+                    <button
+                      key={d}
+                      type="button"
+                      onClick={() => set('date', form.date === d ? '' : d)}
+                      className={`px-3.5 py-2 rounded-lg border font-body text-sm transition-colors ${
+                        form.date === d
+                          ? 'border-accent bg-accent/10 text-text-primary'
+                          : 'border-border text-text-muted hover:border-text-muted'
+                      }`}
+                    >
+                      {d}
+                    </button>
+                  ))}
+                </div>
               </Field>
-              <Field label="Message / Package of Interest">
-                <textarea
-                  value={form.message}
-                  onChange={(e) => set('message', e.target.value)}
-                  placeholder="e.g. Complete Detail on a Medium SUV, interested in Ceramic Sealant…"
-                  rows={4}
-                  className={`${inputCls} resize-none`}
-                />
-              </Field>
+
+              {/* Optional extras — hidden by default to keep the form short */}
+              {!showMore ? (
+                <button
+                  type="button"
+                  onClick={() => setShowMore(true)}
+                  className="font-body text-sm text-accent hover:underline"
+                >
+                  + Add car & location details (optional)
+                </button>
+              ) : (
+                <div className="space-y-4">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <Field label="Eircode">
+                      <input
+                        type="text"
+                        value={form.eircode}
+                        onChange={(e) => set('eircode', e.target.value.toUpperCase())}
+                        placeholder="D04 XY12"
+                        maxLength={8}
+                        className={inputCls}
+                      />
+                    </Field>
+                    <Field label="Your Vehicle">
+                      <input
+                        type="text"
+                        value={form.vehicle}
+                        onChange={(e) => set('vehicle', e.target.value)}
+                        placeholder="e.g. BMW X5 2021"
+                        className={inputCls}
+                      />
+                    </Field>
+                  </div>
+                  <Field label="Anything else?">
+                    <textarea
+                      value={form.message}
+                      onChange={(e) => set('message', e.target.value)}
+                      placeholder="e.g. interested in ceramic coating, heavy pet hair…"
+                      rows={3}
+                      className={`${inputCls} resize-none`}
+                    />
+                  </Field>
+                </div>
+              )}
 
               {/* GDPR */}
               <label className="flex items-start gap-3 cursor-pointer group">
