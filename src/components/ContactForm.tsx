@@ -29,6 +29,7 @@ export default function ContactForm() {
   const [form, setForm] = useState<FormState>(EMPTY)
   const [submitted, setSubmitted] = useState(false)
   const [showMore, setShowMore] = useState(false)
+  const [hp, setHp] = useState('') // honeypot — bots fill it, humans never see it
   // Package chosen in the calculator (carried over so the client barely types).
   const [selection, setSelection] = useState('')
 
@@ -61,9 +62,12 @@ export default function ContactForm() {
     return `https://wa.me/${waNumber}?text=${encodeURIComponent(l.join('\n'))}`
   }
 
+  const valid = form.name.trim().length > 1 && form.phone.trim().length > 4 && form.gdpr
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!form.gdpr) return
+    if (hp) return                 // bot filled the honeypot — silently drop
+    if (!valid) return             // require a real name + contact
     // 1) Open WhatsApp with everything pre-filled (hot leads chat instantly).
     window.open(buildWhatsAppUrl(), '_blank', 'noopener,noreferrer')
     // 2) Also email the lead so nothing is lost, if a Web3Forms key is set.
@@ -139,6 +143,18 @@ export default function ContactForm() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+              {/* Honeypot — hidden from real users; if filled, it's a bot */}
+              <input
+                type="text"
+                name="company"
+                value={hp}
+                onChange={(e) => setHp(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute left-[-9999px] w-px h-px opacity-0 pointer-events-none"
+              />
+
               {/* Package carried over from the calculator */}
               {selection && (
                 <div className="flex items-start justify-between gap-3 p-4 rounded-xl border border-accent/40 bg-accent/10">
@@ -263,7 +279,7 @@ export default function ContactForm() {
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <button
                   type="submit"
-                  disabled={!form.gdpr}
+                  disabled={!valid}
                   className="btn-neon flex-1 flex items-center justify-center gap-2 py-3.5 rounded-lg bg-accent hover:bg-accent-dark disabled:opacity-40 disabled:cursor-not-allowed text-white font-body font-semibold text-sm"
                 >
                   <MessageCircle size={15} />
