@@ -13,7 +13,7 @@ interface Stat {
 const STATS: Stat[] = [
   { value: parseInt(SITE_CONFIG.carsDetailed), suffix: '+', label: 'Cars Detailed' },
   { value: SITE_CONFIG.areas.length, suffix: '+', label: 'Areas Covered' },
-  { value: 0, suffix: '', label: 'Call-out Fee' },
+  { value: parseInt(SITE_CONFIG.yearsActive), suffix: '+', label: 'Years Experience' },
   { value: 100, suffix: '%', label: 'Mobile Service' },
 ]
 
@@ -26,6 +26,13 @@ const TRUST_PILLS = [
 
 function useCounter(target: number, decimals = 0, active: boolean) {
   const [count, setCount] = useState(0)
+
+  // Safety net: some mobile browsers never fire in-view — snap to final value.
+  useEffect(() => {
+    const fallback = setTimeout(() => setCount((c) => (c === 0 ? target : c)), 2500)
+    return () => clearTimeout(fallback)
+  }, [target])
+
   useEffect(() => {
     if (!active) return
     const duration = 1600
@@ -148,9 +155,9 @@ function StatItem({
 
       {/* Number */}
       <span
-        className="relative font-heading font-black leading-none tabular-nums"
+        className="relative font-heading font-black leading-none tabular-nums whitespace-nowrap"
         style={{
-          fontSize: 'clamp(2.6rem, 6vw, 4rem)',
+          fontSize: 'clamp(2rem, 7vw, 4rem)',
           background: 'linear-gradient(160deg, #FFFFFF 30%, #54C39A 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',

@@ -25,8 +25,8 @@ export const SITE_CONFIG = {
   // ─── Reviews / trust ────────────────────────────────────────────────────
   googleRating: '5.0',     // TODO: replace with real Google rating
   reviewCount: '47',       // TODO: replace with real review count
-  carsDetailed: '500+',    // cars detailed to date
-  yearsActive: '3',        // TODO: update
+  carsDetailed: '200+',    // cars detailed to date
+  yearsActive: '10',       // years of experience
 
   // ─── Eircode routing keys covered ───────────────────────────────────────
   // First 3 chars of an Irish Eircode (e.g. "D04"). Add/remove as needed.
