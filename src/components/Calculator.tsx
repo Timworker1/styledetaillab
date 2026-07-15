@@ -75,7 +75,9 @@ export default function Calculator() {
             Configure Your Detail
           </h2>
           <p className="mt-4 font-body text-text-muted max-w-lg mx-auto">
-            Build your package and get an instant price estimate — no waiting, no phone tag.
+            Pick your service, size and any add-ons — you'll see the price instantly.
+            Happy with it? Hit <span className="text-text-secondary font-semibold">Get My Quote</span> and
+            it drops straight into the booking form, ready to send. Takes a minute.
           </p>
         </div>
 
