@@ -7,8 +7,8 @@ import { SITE_CONFIG } from '../config/site'
 const base = import.meta.env.BASE_URL
 const waNumber = SITE_CONFIG.whatsapp.replace(/\D/g, '')
 
-const NAV_LINKS = [
-  { label: 'Services', id: 'services' },
+const NAV_LINKS: { label: string; id: string; to?: string }[] = [
+  { label: 'Services', id: 'services', to: '/services' },
   { label: 'Calculator', id: 'calculator' },
   { label: 'Before & After', id: 'before-after' },
   { label: 'Reviews', id: 'reviews' },
@@ -72,8 +72,8 @@ export default function Header() {
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.id}
-                  href={`#${link.id}`}
-                  onClick={(e) => { e.preventDefault(); scrollTo(link.id) }}
+                  href={link.to ?? `#${link.id}`}
+                  onClick={(e) => { e.preventDefault(); link.to ? navigate(link.to) : scrollTo(link.id) }}
                   className="font-body text-sm font-medium text-text-muted hover:text-text-primary transition-colors duration-200"
                 >
                   {link.label}
@@ -124,8 +124,8 @@ export default function Header() {
                 {NAV_LINKS.map((link) => (
                   <a
                     key={link.id}
-                    href={`#${link.id}`}
-                    onClick={(e) => { e.preventDefault(); closeMenu(); scrollTo(link.id) }}
+                    href={link.to ?? `#${link.id}`}
+                    onClick={(e) => { e.preventDefault(); closeMenu(); link.to ? navigate(link.to) : scrollTo(link.id) }}
                     className="group flex items-center justify-between font-body font-medium text-text-secondary hover:text-text-primary py-3.5 border-b border-border/60 transition-colors"
                   >
                     {link.label}
