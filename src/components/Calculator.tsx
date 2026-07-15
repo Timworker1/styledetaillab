@@ -254,7 +254,14 @@ export default function Calculator() {
               {/* CTAs */}
               <a
                 href="#contact"
-                onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) }}
+                onClick={(e) => {
+                  e.preventDefault()
+                  const extras = ADD_ONS.filter((a) => addOns.has(a.id)).map((a) => a.label)
+                  const quote = `${variantData.label} Detail — ${sizeData.label} vehicle${extras.length ? ' + ' + extras.join(', ') : ''} (est. from €${total})`
+                  sessionStorage.setItem('sdl-quote', quote)
+                  window.dispatchEvent(new Event('sdl-quote'))
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+                }}
                 className="btn-neon block w-full py-3.5 rounded-lg bg-accent hover:bg-accent-dark text-white font-body font-semibold text-sm text-center mb-3"
               >
                 Get My Quote

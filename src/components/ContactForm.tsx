@@ -1,7 +1,10 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Send, MessageCircle, CheckCircle } from 'lucide-react'
+import { MessageCircle, CheckCircle, Phone, X } from 'lucide-react'
 import { SITE_CONFIG } from '../config/site'
+
+const base = import.meta.env.BASE_URL
+const waNumber = SITE_CONFIG.whatsapp.replace(/\D/g, '')
 
 interface FormState {
   name: string
@@ -22,31 +25,57 @@ export default function ContactForm() {
   const inView = useInView(headRef, { once: true, margin: '-60px' })
   const [form, setForm] = useState<FormState>(EMPTY)
   const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
+  // Package chosen in the calculator (carried over so the client barely types).
+  const [selection, setSelection] = useState('')
+
+  useEffect(() => {
+    const read = () => setSelection(sessionStorage.getItem('sdl-quote') || '')
+    read()
+    window.addEventListener('sdl-quote', read)
+    return () => window.removeEventListener('sdl-quote', read)
+  }, [])
 
   const set = (field: keyof FormState, value: string | boolean) =>
     setForm((f) => ({ ...f, [field]: value }))
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!form.gdpr) return
-    setLoading(true)
-    // TODO: replace TODO_FORM_ID with real Formspree endpoint
-    try {
-      await fetch(`https://formspree.io/f/${SITE_CONFIG.formspreeId}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(form),
-      })
-      setSubmitted(true)
-    } finally {
-      setLoading(false)
-    }
+  const summaryLines = () => [
+    selection && `Selected: ${selection}`,
+    `Name: ${form.name}`,
+    `Phone / Email: ${form.phone}`,
+    form.eircode && `Eircode: ${form.eircode}`,
+    form.vehicle && `Vehicle: ${form.vehicle}`,
+    form.date && `Preferred date: ${form.date}`,
+    form.message && `Message: ${form.message}`,
+  ].filter(Boolean) as string[]
+
+  // Ready-to-send WhatsApp message from the form + calculator selection.
+  const buildWhatsAppUrl = () => {
+    const text = ['New booking enquiry — Style Detail Lab', ...summaryLines()].join('\n')
+    return `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`
   }
 
-  const whatsappMsg = encodeURIComponent(
-    `Hi! I'd like to book a detail. Name: ${form.name || '…'}, Vehicle: ${form.vehicle || '…'}, Eircode: ${form.eircode || '…'}. When's your next availability?`
-  )
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!form.gdpr) return
+    // 1) Open WhatsApp with everything pre-filled (hot leads chat instantly).
+    window.open(buildWhatsAppUrl(), '_blank', 'noopener,noreferrer')
+    // 2) Also email the lead so nothing is lost, if a Web3Forms key is set.
+    if (SITE_CONFIG.web3formsKey) {
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: SITE_CONFIG.web3formsKey,
+          subject: 'New booking enquiry — Style Detail Lab',
+          from_name: form.name || 'Website enquiry',
+          selection, ...form,
+        }),
+      }).catch(() => {})
+    }
+    setSubmitted(true)
+  }
+
+  const clearSelection = () => { sessionStorage.removeItem('sdl-quote'); setSelection('') }
 
   return (
     <section id="contact" className="relative py-24 px-4 sm:px-6 lg:px-8 bg-bg-base overflow-hidden">
@@ -72,8 +101,8 @@ export default function ContactForm() {
             Book Your Detail
           </h2>
           <p className="font-body text-text-muted max-w-md mx-auto">
-            Fill in the form and we'll get back to you within a few hours.
-            Prefer WhatsApp? Use the button below.
+            Fill in your details and send them straight to us on WhatsApp —
+            we'll confirm your booking fast. Prefer to call? Use the button below.
           </p>
         </motion.div>
 
@@ -88,10 +117,10 @@ export default function ContactForm() {
               <CheckCircle size={48} className="text-accent" />
               <div>
                 <p className="font-heading font-black uppercase tracking-heading text-2xl text-text-primary mb-2">
-                  Message Sent!
+                  Opening WhatsApp…
                 </p>
                 <p className="font-body text-text-muted">
-                  We'll be in touch within a few hours to confirm your booking.
+                  Your details are ready in WhatsApp — just hit send and we'll confirm your booking. If it didn't open, use the WhatsApp or Call buttons below.
                 </p>
               </div>
               <button
@@ -103,6 +132,18 @@ export default function ContactForm() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+              {/* Package carried over from the calculator */}
+              {selection && (
+                <div className="flex items-start justify-between gap-3 p-4 rounded-xl border border-accent/40 bg-accent/10">
+                  <div>
+                    <p className="font-body text-xs font-semibold uppercase tracking-widest text-accent mb-1">Your selection</p>
+                    <p className="font-body text-sm text-text-primary leading-snug">{selection}</p>
+                  </div>
+                  <button type="button" onClick={clearSelection} aria-label="Clear selection" className="flex-shrink-0 text-text-muted hover:text-text-primary transition-colors">
+                    <X size={16} />
+                  </button>
+                </div>
+              )}
               <div className="grid sm:grid-cols-2 gap-4">
                 <Field label="Your Name *" required>
                   <input
@@ -180,7 +221,7 @@ export default function ContactForm() {
                 <input type="checkbox" className="sr-only" checked={form.gdpr} onChange={() => set('gdpr', !form.gdpr)} required />
                 <span className="font-body text-xs text-text-muted leading-relaxed">
                   I agree to my data being stored and used to respond to this enquiry.
-                  See our <a href="/privacy" className="text-accent hover:underline">Privacy Policy</a>.
+                  See our <a href={`${base}privacy.html`} className="text-accent hover:underline">Privacy Policy</a>.
                 </span>
               </label>
 
@@ -188,24 +229,18 @@ export default function ContactForm() {
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <button
                   type="submit"
-                  disabled={!form.gdpr || loading}
+                  disabled={!form.gdpr}
                   className="btn-neon flex-1 flex items-center justify-center gap-2 py-3.5 rounded-lg bg-accent hover:bg-accent-dark disabled:opacity-40 disabled:cursor-not-allowed text-white font-body font-semibold text-sm"
                 >
-                  {loading ? (
-                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  ) : (
-                    <Send size={15} />
-                  )}
-                  {loading ? 'Sending…' : 'Send Enquiry'}
+                  <MessageCircle size={15} />
+                  Send via WhatsApp
                 </button>
                 <a
-                  href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=${whatsappMsg}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`tel:${SITE_CONFIG.phone}`}
                   className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-lg border border-border hover:border-accent text-text-primary font-body font-semibold text-sm transition-colors"
                 >
-                  <MessageCircle size={15} />
-                  WhatsApp Instead
+                  <Phone size={15} />
+                  Call Us
                 </a>
               </div>
             </form>

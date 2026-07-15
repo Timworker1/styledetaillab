@@ -64,7 +64,10 @@ export const SITE_CONFIG = {
   ],
 
   // ─── Form ───────────────────────────────────────────────────────────────
-  formspreeId: 'TODO_FORM_ID',              // get free endpoint at formspree.io
+  formspreeId: 'TODO_FORM_ID',              // (unused) legacy
+  // Free email delivery for the contact form — get a key at web3forms.com
+  // (enter your email, it emails you an access key). Leave '' to disable email.
+  web3formsKey: '',
 
   // ─── SEO / meta ─────────────────────────────────────────────────────────
   seo: {
