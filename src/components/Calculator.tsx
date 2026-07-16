@@ -53,6 +53,21 @@ export default function Calculator() {
   const total = basePrice + addOnTotal
   const duration = sizeData.durationHours[variant]
 
+  // Picking a package in the Services section preselects it here.
+  useEffect(() => {
+    const onConfigure = (e: Event) => {
+      const detail = (e as CustomEvent<{ variant?: string; size?: string }>).detail
+      if (detail?.variant && SERVICE_VARIANTS.some((v) => v.id === detail.variant)) {
+        setVariant(detail.variant as ServiceVariant)
+      }
+      if (detail?.size && VEHICLE_SIZES.some((s) => s.id === detail.size)) {
+        setSize(detail.size as VehicleSize)
+      }
+    }
+    window.addEventListener('sdl-configure', onConfigure)
+    return () => window.removeEventListener('sdl-configure', onConfigure)
+  }, [])
+
   const toggleAddOn = (id: string) =>
     setAddOns((prev) => {
       const next = new Set(prev)

@@ -10,7 +10,7 @@ export const SITE_CONFIG = {
   phone: '+353870044296',
   phoneDisplay: '+353 87 004 4296',
   whatsapp: '+353870044296',
-  email: 'styledetaillab@gmail.com',
+  email: 'info@styledetaillab.ie',
 
   // ─── Social ─────────────────────────────────────────────────────────────
   social: {

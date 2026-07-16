@@ -255,23 +255,37 @@ export default function ContactForm() {
               )}
 
               {/* GDPR */}
-              <label className="flex items-start gap-3 cursor-pointer group">
-                <div
-                  className={`mt-0.5 flex-shrink-0 w-4 h-4 rounded border transition-colors flex items-center justify-center ${
+              <label className="-m-2 flex items-start gap-3 p-2 rounded-lg cursor-pointer group select-none active:bg-text-primary/5 transition-colors">
+                <input
+                  type="checkbox"
+                  className="sr-only"
+                  checked={form.gdpr}
+                  onChange={() => set('gdpr', !form.gdpr)}
+                  required
+                />
+                <span
+                  className={`mt-px flex-shrink-0 w-5 h-5 rounded border transition-colors flex items-center justify-center ${
                     form.gdpr ? 'bg-accent border-accent' : 'border-border group-hover:border-text-muted'
                   }`}
-                  onClick={() => set('gdpr', !form.gdpr)}
                 >
                   {form.gdpr && (
-                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+                    <svg width="11" height="11" viewBox="0 0 9 9" fill="none">
                       <path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   )}
-                </div>
-                <input type="checkbox" className="sr-only" checked={form.gdpr} onChange={() => set('gdpr', !form.gdpr)} required />
+                </span>
                 <span className="font-body text-xs text-text-muted leading-relaxed">
                   I agree to my data being stored and used to respond to this enquiry.
-                  See our <a href={`${base}privacy.html`} className="text-accent hover:underline">Privacy Policy</a>.
+                  See our{' '}
+                  <a
+                    href={`${base}privacy.html`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-accent hover:underline"
+                  >
+                    Privacy Policy
+                  </a>.
                 </span>
               </label>
 
